@@ -1,0 +1,764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="zh-Hant"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;🇦🇺 陽光黃金海岸之旅 - 行程規劃 App&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/vue@3/dist/vue.global.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/4.1.0/vuedraggable.umd.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* 應用程式主背景色：從圖片底部提取的藍色/天空色延伸 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body, #app {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f7f9fc; /* 輕微的淡藍色/白色，適合布里斯班的陽光感 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* 澳洲藍和陽光黃 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.color-primary { background-color: #004c8f; } /* 深藍 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.color-secondary { background-color: #ffcd00; } /* 陽光黃 */</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* 自定義圓弧效果 (與頁首圖片銜接) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.curved-banner-mask {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>/* 創建一個與 banner 顏色相同的元素來實現圓弧 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #004c8f; /* 假設 banner 底部邊緣是深藍色 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100px; /* 圓弧高度 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: -50px; /* 將圓弧底部拉伸到外面 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 0 0 50% 50%; /* 僅底部圓弧 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scaleX(1.5); /* 讓圓弧更平緩 */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 10;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* 隱藏原生滾動條 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.no-scrollbar::-webkit-scrollbar {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.no-scrollbar {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-ms-overflow-style: none;<span class="Apple-converted-space">  </span>/* IE and Edge */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scrollbar-width: none;<span class="Apple-converted-space">  </span>/* Firefox */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="app" class="relative min-h-screen"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="relative w-full h-[250px] overflow-hidden color-primary"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;img src="Gemini_Generate"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">             </span>alt="澳洲布里斯班與黃金海岸陽光海灘風格橫幅"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">             </span>class="absolute inset-0 w-full h-full object-cover opacity-75"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="absolute inset-0 flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div class="text-4xl font-bold text-white drop-shadow-lg p-2 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>🇦🇺 昆士蘭陽光之旅 ☀️</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="absolute bottom-0 left-0 right-0 h-10 bg-[#f7f9fc] rounded-t-[50px] z-20"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">             </span>style="transform: translateY(50%);"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="absolute top-[220px] right-4 flex space-x-2 z-30"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button v-for="tab in tabs" :key="tab.id"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>@click="currentTab = tab.id"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>:class="{'color-secondary': currentTab === tab.id, 'bg-white text-gray-400': currentTab !== tab.id}"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>class="p-3 rounded-full shadow-lg transition duration-300 transform hover:scale-105"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="material-icons"&gt;{{ tab.icon }}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="relative z-10 p-4 -mt-6"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section v-show="currentTab === 'schedule'"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>## 📅 每日行程表</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex overflow-x-scroll no-scrollbar py-2 mb-4 space-x-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button v-for="(day, index) in itinerary" :key="index"</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>@click="currentDayIndex = index"</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>:class="{'color-primary text-white shadow-lg': currentDayIndex === index, 'bg-white text-gray-700 border border-gray-200': currentDayIndex !== index}"</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>class="flex-shrink-0 w-[60px] h-[70px] flex flex-col items-center justify-center p-2 rounded-xl transition duration-300 hover:shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-xs"&gt;{{ day.date.substring(0, 3) }}&lt;/span&gt; &lt;span class="text-3xl font-bold"&gt;{{ day.date.substring(4) }}&lt;/span&gt; &lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div v-if="currentDay" class="space-y-4"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex items-center p-3 bg-white rounded-xl shadow-md border-l-4 border-blue-400 text-gray-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="material-icons text-3xl text-yellow-500 mr-3"&gt;wb_sunny&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="font-bold"&gt;{{ currentDay.weather.location }}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-lg font-semibold"&gt;{{ currentDay.weather.temp }}°C&lt;/span&gt; (體感 {{ currentDay.weather.feels_like }}°C)</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="relative mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;select class="block w-full p-3 border border-gray-300 rounded-xl shadow-sm appearance-none focus:ring-blue-500 focus:border-blue-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option&gt;所有分類&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option&gt;景點&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option&gt;住宿&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option&gt;美食&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option&gt;購物&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option&gt;航班&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option&gt;其他&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;draggable v-model="currentDay.activities" item-key="id" @end="recalculateTransportTimes" :options="{handle: '.drag-handle'}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;template #item="{element: activity, index}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div v-if="index === 0 &amp;&amp; currentDayIndex === 0"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>class="p-4 bg-white rounded-xl shadow-md border-l-4 border-yellow-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="flex justify-between items-center text-gray-700"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h3 class="font-bold text-lg flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span class="material-icons mr-2 text-blue-500"&gt;flight_land&lt;/span&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>{{ activity.name }}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="mt-2 text-sm space-y-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p&gt;航班: **{{ flightInfo.return.flight_num }}**&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p&gt;抵達: **{{ flightInfo.return.arrival_time }}** ({{ flightInfo.return.arrival_airport_short }})&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p&gt;飛行時間: {{ flightInfo.return.duration }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div v-else class="relative p-4 bg-white rounded-xl shadow-md border-l-4"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>:class="{'border-green-500': activity.category === '住宿', 'border-blue-500': activity.category === '景點', 'border-red-500': activity.category === '美食'}"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>@click="editActivity(currentDayIndex, index)"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                                </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="flex justify-between items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h4 class="font-bold text-lg text-gray-800"&gt;{{ activity.name }}&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="material-icons text-gray-400 drag-handle cursor-grab"&gt;menu&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="mt-2 text-sm text-gray-600 space-y-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p v-if="activity.time"&gt;時間: **{{ activity.time }}**&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p v-if="activity.category === '景點' &amp;&amp; activity.price"&gt;門票: **{{ activity.price }}**&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p&gt;備註: {{ activity.notes }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                                </span></p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;button @click.stop="openGoogleMaps(activity.location)"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>class="mt-3 text-blue-600 hover:text-blue-800 text-sm font-semibold flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="material-icons text-base mr-1"&gt;directions&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>Google Map 導航</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div v-if="index &lt; currentDay.activities.length - 1 || (index === 0 &amp;&amp; currentDayIndex === 0)" class="flex items-center text-gray-500 mt-2 ml-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="material-icons text-lg mr-2" :title="activity.transport.type"&gt;{{ activity.transport.icon }}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-sm font-medium"&gt;{{ activity.transport.time }}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/template&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/draggable&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button @click="openNewActivityModal"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>class="fixed bottom-20 right-6 p-4 color-secondary text-white rounded-full shadow-2xl transition duration-300 transform hover:scale-110 z-40"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="material-icons text-3xl"&gt;add&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section v-show="currentTab === 'info'" class="space-y-6 p-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>## ℹ️ 資訊</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-4 rounded-xl shadow-lg border-l-4 border-blue-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-xl mb-3 text-blue-700 flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="material-icons mr-2"&gt;flight&lt;/span&gt; 航班資訊</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h3&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="border-b pb-3 mb-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h4 class="font-semibold text-lg mb-2"&gt;去程: 台灣 (TPE) → 墨爾本 (MEL)&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-2 gap-2 text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;起飛/抵達:&lt;/span&gt; {{ flightInfo.depart.departure_time }} / {{ flightInfo.depart.arrival_time }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;航班編號:&lt;/span&gt; **{{ flightInfo.depart.flight_num }}**&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;飛行時間:&lt;/span&gt; {{ flightInfo.depart.duration }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;起飛機場:&lt;/span&gt; {{ flightInfo.depart.departure_airport }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h4 class="font-semibold text-lg mb-2"&gt;回程: 黃金海岸 (OOL) → 台灣 (TPE)&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-2 gap-2 text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;起飛/抵達:&lt;/span&gt; {{ flightInfo.return.departure_time }} / {{ flightInfo.return.arrival_time }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;航班編號:&lt;/span&gt; **{{ flightInfo.return.flight_num }}**&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;飛行時間:&lt;/span&gt; {{ flightInfo.return.duration }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;&lt;span class="font-medium"&gt;抵達機場:&lt;/span&gt; {{ flightInfo.return.arrival_airport }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-4 rounded-xl shadow-lg border-l-4 border-green-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-between items-center mb-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-xl text-green-700 flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="material-icons mr-2"&gt;hotel&lt;/span&gt; 住宿資訊</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button @click="openAccommodationModal" class="text-sm text-blue-500 hover:text-blue-700 font-semibold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="material-icons text-base"&gt;edit&lt;/span&gt; 編輯</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div v-for="(info, key) in accommodationInfo" :key="key" class="border-b last:border-b-0 pb-2 mb-2 last:mb-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h4 class="font-semibold text-lg mb-1"&gt;{{ info.city }} 住宿&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-sm text-gray-700"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;名稱:&lt;/span&gt; **{{ info.name || '待定' }}**</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p v-if="info.phone" class="text-sm text-gray-700"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;電話:&lt;/span&gt; &lt;a :href="'tel:' + info.phone" class="text-blue-600"&gt;{{ info.phone }}&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p v-if="info.address" class="text-sm text-gray-700"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;地址:&lt;/span&gt; {{ info.address }}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a v-if="info.address" :href="'https://www.google.com/maps/search/?api=1&amp;query=' + info.address" target="_blank" class="text-xs text-blue-500 hover:underline flex items-center mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="material-icons text-sm mr-1"&gt;location_on&lt;/span&gt; 導航連結</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-4 rounded-xl shadow-lg border-l-4 border-red-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 class="font-bold text-xl mb-3 text-red-700 flex items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="material-icons mr-2"&gt;emergency&lt;/span&gt; 緊急連絡</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-sm"&gt;在澳洲，所有緊急服務（警察、救護車、消防）的電話號碼是：&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-2xl font-bold mt-2 text-red-600"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="tel:000"&gt;000&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-xs mt-1 text-gray-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="font-medium"&gt;非緊急警察服務 (Police Assistance Line):&lt;/span&gt; 131 444</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section v-show="currentTab === 'shopping'" class="p-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>## 🛍️ 購物清單</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-2 gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div v-for="(item, index) in shoppingList" :key="index"</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>class="bg-white p-3 rounded-xl shadow-md border-b-4 border-pink-300"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;img v-if="item.image" :src="item.image" :alt="item.name"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                         </span>class="w-full h-24 object-cover rounded-lg mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="font-semibold text-gray-800"&gt;{{ item.name }}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button @click="removeShoppingItem(index)" class="text-red-400 text-xs mt-1 hover:text-red-600"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>刪除</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button @click="openNewShoppingModal"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>class="fixed bottom-20 right-6 p-4 color-secondary text-white rounded-full shadow-2xl transition duration-300 transform hover:scale-110 z-40"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="material-icons text-3xl"&gt;add&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section v-show="currentTab === 'expense'" class="p-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>## 💰 花費記錄</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-4 rounded-xl shadow-lg mb-4 flex justify-between items-center border-l-4 border-yellow-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-lg font-medium text-gray-700"&gt;總花費 (AUD)&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-3xl font-bold color-primary text-white p-2 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>${{ totalExpenses.toFixed(2) }}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="space-y-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div v-for="(expense, index) in expenseList" :key="index"</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>class="bg-white p-3 rounded-xl shadow-md border-l-4"</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>:class="{'border-blue-500': expense.category === '交通', 'border-red-500': expense.category === '飲食', 'border-green-500': expense.category === '住宿'}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex justify-between items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="font-semibold text-lg text-gray-800"&gt;{{ expense.name }}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-xl font-bold text-red-600"&gt;${{ expense.amount.toFixed(2) }}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-sm text-gray-600"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="font-medium"&gt;{{ expense.category }}&lt;/span&gt; |<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{{ expense.date }} |<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{{ expense.payment }}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button @click="openNewExpenseModal"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>class="fixed bottom-20 right-6 p-4 color-secondary text-white rounded-full shadow-2xl transition duration-300 transform hover:scale-110 z-40"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="material-icons text-3xl"&gt;add&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div v-if="isActivityModalOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="text-2xl font-bold mb-4 text-gray-800"&gt;{{ editingActivityIndex === null ? '新增行程' : '編輯行程' }}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form @submit.prevent="saveActivity" class="space-y-4"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" v-model="activityForm.name" placeholder="名稱" required</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select v-model="activityForm.category" class="w-full p-3 border border-gray-300 rounded-lg" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="" disabled&gt;-- 選擇分類 --&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="景點"&gt;景點&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="住宿"&gt;住宿&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="美食"&gt;美食&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="購物"&gt;購物&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="其他"&gt;其他&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" v-model="activityForm.time" placeholder="時間 (Ex: 13:30 - 16:30)"</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input v-if="activityForm.category === '景點'" type="text" v-model="activityForm.price" placeholder="門票費用 (Ex: $49 AUD)"</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea v-model="activityForm.notes" placeholder="特色與備註" rows="3"</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;&lt;/textarea&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" v-model="activityForm.location" placeholder="Google Maps 查詢地點 (Ex: Q1 SkyPoint)" required</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-end space-x-3 mt-5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="button" @click="isActivityModalOpen = false" class="py-2 px-4 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>取消</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="py-2 px-4 color-primary text-white rounded-lg hover:opacity-90"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{{ editingActivityIndex === null ? '新增' : '儲存修改' }}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button v-if="editingActivityIndex !== null" @click="confirmDeleteActivity" type="button"</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>class="w-full py-2 px-4 bg-red-500 text-white rounded-lg mt-3 hover:bg-red-600"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>刪除行程</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div v-if="isAccommodationModalOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="text-2xl font-bold mb-4 text-gray-800"&gt;編輯住宿資訊&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form @submit.prevent="saveAccommodation" class="space-y-4"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div v-for="(info, city) in accommodationInfo" :key="city" class="border p-3 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h4 class="font-semibold mb-2"&gt;{{ info.city }} 住宿&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" v-model="info.name" placeholder="飯店名稱"</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>class="w-full p-2 border border-gray-300 rounded-lg mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="tel" v-model="info.phone" placeholder="電話"</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>class="w-full p-2 border border-gray-300 rounded-lg mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="text" v-model="info.address" placeholder="地址 (用於導航)"</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>class="w-full p-2 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-end space-x-3 mt-5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="button" @click="isAccommodationModalOpen = false" class="py-2 px-4 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>取消</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="py-2 px-4 color-primary text-white rounded-lg hover:opacity-90"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>儲存修改</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div v-if="isShoppingModalOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="text-2xl font-bold mb-4 text-gray-800"&gt;新增購物項目&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form @submit.prevent="addShoppingItem" class="space-y-4"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" v-model="shoppingForm.name" placeholder="商品名稱" required</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="block text-sm font-medium text-gray-700"&gt;商品圖片 (僅限 Base64 或 URL)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="file" @change="handleImageUpload" accept="image/*"</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-end space-x-3 mt-5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="button" @click="isShoppingModalOpen = false" class="py-2 px-4 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>取消</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="py-2 px-4 color-primary text-white rounded-lg hover:opacity-90"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>新增</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div v-if="isExpenseModalOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="text-2xl font-bold mb-4 text-gray-800"&gt;新增花費記錄&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form @submit.prevent="addExpense" class="space-y-4"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select v-model="expenseForm.category" class="w-full p-3 border border-gray-300 rounded-lg" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="" disabled&gt;-- 選擇類別 --&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;交通&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;飲食&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;住宿&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;門票&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;購物&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;其他&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/select&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" v-model="expenseForm.name" placeholder="名稱/描述" required</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="date" v-model="expenseForm.date" placeholder="日期" required</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="number" v-model.number="expenseForm.amount" placeholder="金額 (AUD)" required min="0.01" step="0.01"</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select v-model="expenseForm.payment" class="w-full p-3 border border-gray-300 rounded-lg" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="" disabled&gt;-- 付款方式 --&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;現金&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;信用卡&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/select&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;textarea v-model="expenseForm.notes" placeholder="備註" rows="2"</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>class="w-full p-3 border border-gray-300 rounded-lg"&gt;&lt;/textarea&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-end space-x-3 mt-5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="button" @click="isExpenseModalOpen = false" class="py-2 px-4 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>取消</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;button type="submit" class="py-2 px-4 color-primary text-white rounded-lg hover:opacity-90"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>新增花費</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">// -----------------------------------------------------------</p>
+<p class="p1">// Vue.js 3 應用程式邏輯</p>
+<p class="p1">// -----------------------------------------------------------</p>
+<p class="p2"><br></p>
+<p class="p1">const { createApp, ref, computed, reactive, nextTick } = Vue;</p>
+<p class="p1">const draggable = vuedraggable; // 引入 VueDraggable</p>
+<p class="p2"><br></p>
+<p class="p1">const app = createApp({</p>
+<p class="p1"><span class="Apple-converted-space">    </span>components: {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>draggable,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setup() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 核心狀態 (使用 LocalStorage 實現持久化) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const getLocalStorage = (key, defaultValue) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const stored = localStorage.getItem(key);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return stored ? JSON.parse(stored) : defaultValue;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const setLocalStorage = (key, value) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem(key, JSON.stringify(value));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const tabs = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'schedule', icon: 'location_on' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'info', icon: 'info' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'shopping', icon: 'shopping_basket' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ id: 'expense', icon: 'payments' },</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const currentTab = ref('schedule');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const currentDayIndex = ref(0);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 航班資訊 (靜態資料)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const flightInfo = reactive({</p>
+<p class="p1"><span class="Apple-converted-space">            </span>depart: { departure_airport_short: 'TPE', departure_airport: '桃園國際機場', departure_time: '23:30', arrival_airport_short: 'MEL', arrival_airport: '墨爾本機場', arrival_time: '10:10 (+1)', duration: '8h 40m', flight_num: 'SQ879/VA838' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return: { departure_airport_short: 'OOL', departure_airport: '黃金海岸機場', departure_time: '14:50', arrival_airport_short: 'TPE', arrival_airport: '桃園國際機場', arrival_time: '22:35 (+1)', duration: '9h 45m', flight_num: 'VA528/SQ5229' },</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 住宿資訊 (可編輯，從 LocalStorage 載入)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const accommodationInfo = reactive(getLocalStorage('accommodationInfo', {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>brisbane: { city: '布里斯班', name: '待定 (可電話修改)', phone: '', address: '' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>goldcoast: { city: '黃金海岸', name: '待定 (可電話修改)', phone: '', address: '' },</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const saveAccommodation = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setLocalStorage('accommodationInfo', accommodationInfo);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isAccommodationModalOpen.value = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>alert('住宿資訊已儲存！');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 行程資訊 (從 LocalStorage 載入，或使用預設資料)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const initialItinerary = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>date: 'Tue 9', activities: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 101, name: '抵達黃金海岸機場 (OOL) - VA528', category: '航班', time: '09:40', notes: '重要：需自行訂購 Con-X-ion 或轉火車', location: 'Gold Coast Airport' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 102, name: '布里斯班酒店 Check-in/寄放行李', category: '住宿', time: '12:30', notes: '地址：需修改', location: 'Brisbane CBD' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 103, name: '午餐 &amp; 皇后街 (Queen Street Mall)', category: '購物', time: '13:00', price: '免費', notes: '逛市政廳、免費上鐘樓（需預約）', location: 'Queen Street Mall' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 104, name: '南岸公園 (South Bank Parklands)', category: '景點', time: '15:00', price: '免費', notes: '看 Streets Beach 人造沙灘 &amp; BRISBANE 地標', location: 'South Bank Parklands' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 105, name: '晚餐：霍華德史密斯碼頭', category: '美食', time: '18:00', price: '', notes: '位於故事橋下，氣氛極佳', location: 'Howard Smith Wharves' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>weather: { location: '布里斯班', icon: 'wb_sunny', temp: 25, feels_like: 27 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>date: 'Wed 10', activities: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 201, name: '出發前往 Holt Street Wharf', category: '交通', time: '08:30', notes: '自行前往碼頭搭船', location: 'Holt Street Wharf' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 202, name: '摩頓島 (海豚島) 一日遊', category: '景點', time: '10:00 - 21:00', price: '船票/套票', notes: '重頭戲：餵食野生海豚！', location: 'Tangalooma Island Resort' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>weather: { location: '摩頓島', icon: 'cloud', temp: 23, feels_like: 25 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>date: 'Thu 11', activities: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 301, name: 'James Street (Fortitude Valley)', category: '景點', time: '09:00 - 11:30', price: '免費', notes: '布里斯班最潮街區，享受早午餐', location: 'James Street, Fortitude Valley' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 302, name: '移動：布里斯班 → 電影世界', category: '交通', time: '12:00 - 13:15', notes: '火車轉巴士 (Central -&gt; Helensvale -&gt; TX7)', location: 'Warner Bros. Movie World' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 303, name: '華納兄弟電影世界 (看秀)', category: '景點', time: '13:30 - 16:30', price: '門票', notes: '必看：好萊塢飛車特技 &amp; 明星大遊行', location: 'Warner Bros. Movie World' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 304, name: '入住黃金海岸酒店', category: '住宿', time: '17:00', notes: '取回行李，搭 G:link 輕軌前往', location: 'Surfers Paradise' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>weather: { location: '黃金海岸', icon: 'thunderstorm', temp: 28, feels_like: 30 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>date: 'Fri 12', activities: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 401, name: 'Q1 SkyPoint 觀景台', category: '景點', time: '11:00', price: '門票', notes: '360度俯瞰海岸線', location: 'SkyPoint Observation Deck' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 402, name: '伯利角 (Burleigh Heads)', category: '景點', time: '14:00 - 17:00', price: '免費', notes: '看海重點！沿著步道走到 Tumgun Lookout', location: 'Burleigh Heads' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 403, name: '晚餐：Rick Shores', category: '美食', time: '17:30', price: '高價位', notes: '必吃：Moreton Bay Bug Roll。已預約?', location: 'Rick Shores' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>weather: { location: '黃金海岸', icon: 'wb_sunny', temp: 26, feels_like: 28 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>date: 'Sat 13', activities: [</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 501, name: '前往可倫賓野生動物園', category: '交通', time: '09:00', notes: 'Check-out 帶行李去 (門口可寄存)', location: 'Currumbin Wildlife Sanctuary' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 502, name: '可倫賓野生動物園 (抱樹熊)', category: '景點', time: '09:30 - 12:30', price: '門票/抱考拉費用', notes: '昆士蘭少數可合法抱考拉處，記得一進園就預約!', location: 'Currumbin Wildlife Sanctuary' },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>{ id: 503, name: '前往機場 (OOL) 返程', category: '交通', time: '12:45', notes: '動物園到機場僅 10 分鐘車程', location: 'Gold Coast Airport' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>weather: { location: '可倫賓', icon: 'wb_sunny', temp: 27, feels_like: 29 },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const itinerary = reactive(getLocalStorage('itinerary', initialItinerary));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 購物清單 (從 LocalStorage 載入)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const shoppingList = reactive(getLocalStorage('shoppingList', []));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const shoppingForm = reactive({ name: '', image: null });</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 花費記錄 (從 LocalStorage 載入)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const expenseList = reactive(getLocalStorage('expenseList', []));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const expenseForm = reactive({</p>
+<p class="p1"><span class="Apple-converted-space">            </span>category: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>name: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>date: new Date().toISOString().substring(0, 10),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>amount: 0,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>payment: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>notes: '',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 行程計算與操作 ---</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// (7) (6) 模擬交通時間計算</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const transportData = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ icon: 'directions_transit', type: '大眾運輸', time: '1h 30m' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ icon: 'directions_walk', type: '步行', time: '15m' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ icon: 'directions_car', type: '開車', time: '30m' },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ icon: 'schedule', type: '移動時間', time: '45m' }, // 預設</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const recalculateTransportTimes = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 這個函數在實際應用中會呼叫 Google Maps Distance Matrix API</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 這裡用隨機模擬，以符合「新增行程後重新計算」的要求</p>
+<p class="p1"><span class="Apple-converted-space">            </span>itinerary.forEach((day, dayIndex) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>for (let i = 0; i &lt; day.activities.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const activity = day.activities[i];</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (activity.category !== '航班') {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>// 模擬計算時間</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>const randomTransport = transportData[Math.floor(Math.random() * transportData.length)];</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>activity.transport = {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>icon: randomTransport.icon,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>type: randomTransport.type,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>time: randomTransport.time</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Day 1 第一個活動前的交通時間，視為前一日(機場)到該活動(酒店)</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (dayIndex === 0 &amp;&amp; i === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>activity.transport = { icon: 'directions_transit', type: '大眾運輸', time: '1h 40m' };</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setLocalStorage('itinerary', itinerary);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 首次載入時執行一次，確保初始資料有交通時間欄位</p>
+<p class="p1"><span class="Apple-converted-space">        </span>recalculateTransportTimes();<span class="Apple-converted-space"> </span></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const currentDay = computed(() =&gt; itinerary[currentDayIndex.value]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// (9) Google Maps 導航</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const openGoogleMaps = (location) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (location) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// `dir_action=navigate` 會直接在手機上啟動導航</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const url = `https://www.google.com/maps/dir/?api=1&amp;destination=${encodeURIComponent(location)}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>window.open(url, '_blank');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('此行程尚未設定導航地點。');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 行程編輯 Modal ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const isActivityModalOpen = ref(false);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const editingDayIndex = ref(null);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const editingActivityIndex = ref(null);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const activityForm = reactive({ id: null, name: '', category: '', time: '', price: '', notes: '', location: '', transport: {} });</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const openNewActivityModal = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>editingActivityIndex.value = null;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>editingDayIndex.value = currentDayIndex.value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Object.assign(activityForm, { id: Date.now(), name: '', category: '', time: '', price: '', notes: '', location: '', transport: {} });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isActivityModalOpen.value = true;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const editActivity = (dayIndex, activityIndex) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>editingDayIndex.value = dayIndex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>editingActivityIndex.value = activityIndex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const activity = itinerary[dayIndex].activities[activityIndex];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Object.assign(activityForm, activity);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isActivityModalOpen.value = true;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const saveActivity = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (editingActivityIndex.value === null) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 新增</p>
+<p class="p1"><span class="Apple-converted-space">                </span>itinerary[editingDayIndex.value].activities.push({ ...activityForm });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 編輯</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Object.assign(itinerary[editingDayIndex.value].activities[editingActivityIndex.value], activityForm);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>recalculateTransportTimes(); // 重新計算交通時間</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isActivityModalOpen.value = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const confirmDeleteActivity = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (confirm(`確定要刪除行程「${activityForm.name}」嗎？`)) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>itinerary[editingDayIndex.value].activities.splice(editingActivityIndex.value, 1);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>recalculateTransportTimes(); // 重新計算交通時間</p>
+<p class="p1"><span class="Apple-converted-space">                </span>isActivityModalOpen.value = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 住宿編輯 Modal ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const isAccommodationModalOpen = ref(false);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const openAccommodationModal = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 克隆一份資料供編輯，避免直接修改狀態</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isAccommodationModalOpen.value = true;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 購物清單 Modal ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const isShoppingModalOpen = ref(false);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const openNewShoppingModal = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Object.assign(shoppingForm, { name: '', image: null });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isShoppingModalOpen.value = true;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const handleImageUpload = (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const file = event.target.files[0];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (file) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 使用 FileReader 轉為 Base64 Data URL 模擬圖片儲存</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const reader = new FileReader();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.onload = (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>shoppingForm.image = e.target.result;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>reader.readAsDataURL(file);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const addShoppingItem = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>shoppingList.push({ ...shoppingForm });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setLocalStorage('shoppingList', shoppingList);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isShoppingModalOpen.value = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const removeShoppingItem = (index) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">             </span>if (confirm(`確定要刪除購物項目「${shoppingList[index].name}」嗎？`)) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>shoppingList.splice(index, 1);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setLocalStorage('shoppingList', shoppingList);</p>
+<p class="p1"><span class="Apple-converted-space">             </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 花費 Modal ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const isExpenseModalOpen = ref(false);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const openNewExpenseModal = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 每次開啟時，自動帶入當日日期</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Object.assign(expenseForm, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>category: '',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: '',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>date: new Date().toISOString().substring(0, 10),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>amount: 0,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>payment: '',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>notes: '',</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isExpenseModalOpen.value = true;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const addExpense = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>expenseList.push({ ...expenseForm });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setLocalStorage('expenseList', expenseList);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>isExpenseModalOpen.value = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// (2) 總花費計算</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const totalExpenses = computed(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return expenseList.reduce((sum, item) =&gt; sum + item.amount, 0);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 監聽資料變化並儲存 ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 確保任何資料變動後都能存回 LocalStorage</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Vue 3 的 reactive 已經是深度監聽，但我們需要手動調用 setLocalStorage</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 為了簡化，我們只在新增/編輯/拖曳操作後儲存，而不是在每次 keypress 時儲存。</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>tabs,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentTab,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentDayIndex,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>itinerary,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentDay,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flightInfo,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>accommodationInfo,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>shoppingList,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>expenseList,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>totalExpenses,</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>isActivityModalOpen,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>activityForm,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>editingActivityIndex,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>openNewActivityModal,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>editActivity,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>saveActivity,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>confirmDeleteActivity,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>recalculateTransportTimes,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>openGoogleMaps,</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>isAccommodationModalOpen,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>openAccommodationModal,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>saveAccommodation,</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>isShoppingModalOpen,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>shoppingForm,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>openNewShoppingModal,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>handleImageUpload,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>addShoppingItem,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>removeShoppingItem,</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>isExpenseModalOpen,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>expenseForm,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>openNewExpenseModal,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>addExpense,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">app.mount('#app');</p>
+<p class="p1">&lt;/script&gt;</p>
+</body>
+</html>
