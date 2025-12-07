@@ -2,277 +2,284 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🇦🇺2025 Dec Brisbane & Gold Coast☀️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🇦🇺 2025 Dec Brisbane & Gold Coast ☀️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* 應用程式主背景色 */
-        body { background-color: #004c8f; }
-        #app { background-color: #f7f9fc; min-height: 100vh; }
+        body { background-color: #f0f4f8; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        /* 澳洲藍和陽光黃 */
-        .color-primary { background-color: #004c8f; }
-        .color-secondary { background-color: #ffcd00; }
-
-        /* 隱藏滾動條 */
+        /* 隱藏滾動條但保留功能 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         [v-cloak] { display: none; }
-        .img-loading { background: #f3f4f6; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        
+        /* 動畫 */
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; }
+        
+        /* 玻璃擬態 */
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .glass-dark { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(10px); }
     </style>
 </head>
 <body>
 
-<div id="app" class="relative min-h-screen" v-cloak>
+<div id="app" class="relative min-h-screen pb-24 max-w-md mx-auto bg-gray-50 shadow-2xl overflow-hidden" v-cloak>
     
-    <header class="relative w-full bg-[#004c8f]">
-        <img src="Gemini Generated.png" alt="澳洲風格橫幅" 
-             class="w-full h-auto block min-h-[250px] object-contain bg-[#004c8f]">
-             
-        <div class="absolute inset-0 bg-gradient-to-t from-[#004c8f] via-transparent to-transparent opacity-80"></div>
-
-        <div class="absolute bottom-10 left-6 z-10 w-full pr-4">
-             <div class="text-white drop-shadow-md">
-                <p class="text-sm font-medium opacity-90 mb-1 tracking-wider uppercase text-white-300">Trip Planner</p>
-                <h1 class="text-3xl font-bold leading-tight shadow-black">
-                    2025 Dec <br>
-                    Brisbane & Gold Coast ☀️
-                </h1>
-             </div>
+    <header class="relative h-[280px]">
+        <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=800&auto=format&fit=crop" 
+             class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-gray-50"></div>
+        
+        <div class="absolute bottom-6 left-6 right-6">
+            <span class="bg-yellow-400 text-blue-900 text-xs font-bold px-2 py-1 rounded-md mb-2 inline-block shadow-sm">TRIP PLANNER</span>
+            <h1 class="text-4xl font-extrabold text-white drop-shadow-lg leading-tight">
+                2025 Dec<br>Queensland
+            </h1>
         </div>
 
-        <button @click="isSyncModalOpen = true" class="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white p-2 rounded-full shadow-lg hover:bg-white/30 transition z-50">
-            <span class="material-icons text-xl">cloud_sync</span>
+        <button @click="isSyncModalOpen = true" class="absolute top-4 right-4 bg-white/30 backdrop-blur-md text-white p-2 rounded-full shadow-lg active:scale-95 transition">
+            <span class="material-icons">cloud_sync</span>
         </button>
     </header>
 
-    <div class="relative z-40 -mt-8 flex justify-end px-4 space-x-2 mb-2">
-        <button v-for="tab in tabs" :key="tab.id" @click="currentTab = tab.id"
-                :class="{'color-secondary text-gray-900': currentTab === tab.id, 'bg-white text-gray-400': currentTab !== tab.id}"
-                class="p-3 rounded-full shadow-lg transition duration-300 transform active:scale-95 flex items-center justify-center w-12 h-12">
-            <span class="material-icons text-xl">{{ tab.icon }}</span>
-        </button>
+    <div class="px-6 -mt-8 relative z-20 mb-6">
+        <div class="bg-white rounded-2xl shadow-xl p-1.5 flex justify-between items-center">
+            <button v-for="tab in tabs" :key="tab.id" @click="currentTab = tab.id"
+                :class="currentTab === tab.id ? 'bg-blue-600 text-white shadow-md' : 'text-gray-400 hover:bg-gray-50'"
+                class="flex-1 py-3 rounded-xl transition-all duration-300 flex items-center justify-center">
+                <span class="material-icons">{{ tab.icon }}</span>
+            </button>
+        </div>
     </div>
 
-    <main class="relative z-30 bg-[#f7f9fc] rounded-t-[30px] px-5 pt-6 pb-32 min-h-[60vh] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] -mt-4">
+    <main class="px-5">
         
-        <section v-show="currentTab === 'schedule'" class="animate-fade-in">
-            <div class="flex items-center mb-4">
-                <span class="material-icons mr-2 text-blue-600 text-3xl">calendar_month</span>
-                <h2 class="text-2xl font-bold text-gray-800">每日行程</h2>
-            </div>
-            
-            <div class="flex overflow-x-scroll no-scrollbar py-2 mb-6 space-x-3">
+        <section v-show="currentTab === 'schedule'">
+            <div class="flex overflow-x-auto no-scrollbar gap-3 mb-6 pb-2">
                 <button v-for="(day, index) in itinerary" :key="index" @click="currentDayIndex = index"
-                        :class="{'color-primary text-white shadow-lg scale-105': currentDayIndex === index, 'bg-white text-gray-700 border border-gray-200': currentDayIndex !== index}"
-                        class="flex-shrink-0 w-[65px] h-[80px] flex flex-col items-center justify-center p-2 rounded-2xl transition duration-300">
-                    <span class="text-xs opacity-80">{{ day.date.substring(0, 3) }}</span>
-                    <span class="text-2xl font-bold">{{ day.date.substring(4) }}</span>
+                    :class="currentDayIndex === index ? 'bg-blue-600 text-white ring-4 ring-blue-100' : 'bg-white text-gray-500 border border-gray-100'"
+                    class="flex-shrink-0 w-[70px] h-[85px] flex flex-col items-center justify-center rounded-2xl transition-all shadow-sm">
+                    <span class="text-xs font-medium opacity-80 uppercase tracking-wide">{{ day.date.split(' ')[0] }}</span>
+                    <span class="text-2xl font-bold mt-1">{{ day.date.split(' ')[1] }}</span>
                 </button>
             </div>
-            
-            <div v-if="currentDay" class="space-y-5">
-                <div class="flex items-center p-4 bg-white rounded-2xl shadow-sm border border-blue-100">
-                    <span class="material-icons text-4xl text-yellow-500 mr-4">{{ currentDay.weather.icon }}</span>
+
+            <div v-if="currentDay" class="bg-gradient-to-r from-blue-500 to-blue-400 rounded-3xl p-5 text-white shadow-lg mb-8 relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/20 rounded-full blur-2xl"></div>
+                <div class="flex items-center justify-between relative z-10">
                     <div>
-                        <div class="font-bold text-gray-800 text-lg">{{ currentDay.weather.location }}</div>
-                        <div class="text-gray-500 text-sm">
-                            <span class="text-xl font-bold text-gray-800">{{ currentDay.weather.temp }}°</span> 
-                            (體感 {{ currentDay.weather.feels_like }}°)
+                        <div class="text-blue-100 text-sm font-medium mb-1 flex items-center">
+                            <span class="material-icons text-sm mr-1">place</span> {{ currentDay.weather.location }}
+                        </div>
+                        <div class="text-4xl font-bold tracking-tight">{{ currentDay.weather.temp }}°</div>
+                        <div class="text-blue-100 text-xs mt-1">體感 {{ currentDay.weather.feels_like }}°</div>
+                    </div>
+                    <div class="text-right">
+                        <span class="material-icons text-6xl opacity-90 drop-shadow-md">
+                            {{ getWeatherIcon(currentDay.weather.condition) }}
+                        </span>
+                        <div class="text-sm font-bold mt-1">{{ getWeatherLabel(currentDay.weather.condition) }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="currentDay" class="relative pl-4 space-y-8">
+                <div class="absolute left-[19px] top-4 bottom-0 w-0.5 bg-gray-200"></div>
+
+                <div v-for="(activity, index) in currentDay.activities" :key="activity.id" class="relative group" @click="editActivity(currentDayIndex, index)">
+                    <div class="absolute -left-[30px] top-0 bg-white border-2 border-blue-500 w-10 h-10 rounded-full flex items-center justify-center z-10 shadow-sm text-[10px] font-bold text-blue-800 leading-tight text-center">
+                        {{ activity.time.split(' ')[0] }}
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 active:scale-[0.98] transition-transform duration-200">
+                        <div class="flex justify-between items-start mb-3">
+                            <span :class="getCategoryColor(activity.category)" class="px-2 py-1 rounded-md text-[10px] font-bold text-white shadow-sm">
+                                {{ activity.category }}
+                            </span>
+                            <div class="flex space-x-2">
+                                <button @click.stop="openGoogleMaps(activity.location)" class="text-gray-400 hover:text-blue-500">
+                                    <span class="material-icons text-lg">near_me</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div v-if="activity.image" class="w-20 h-20 rounded-xl bg-gray-100 flex-shrink-0 bg-cover bg-center shadow-inner" :style="{backgroundImage: 'url(' + activity.image + ')'}"></div>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-bold text-gray-800 text-lg leading-tight mb-1 truncate">{{ activity.name }}</h3>
+                                <p class="text-xs text-gray-500 line-clamp-2 mb-2 bg-gray-50 p-1.5 rounded-lg">{{ activity.notes || '無備註' }}</p>
+                            </div>
+                        </div>
+
+                        <div v-if="activity.transport && index < currentDay.activities.length - 1" class="mt-3 pt-3 border-t border-dashed border-gray-200 flex items-center text-xs text-gray-400">
+                            <span class="material-icons text-sm mr-1">{{ activity.transport.icon }}</span>
+                            <span>前往下一站約 {{ activity.transport.time }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-4">
-                    <div v-for="(activity, index) in currentDay.activities" :key="activity.id">
-                        
-                        <div class="relative bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex h-[110px]"
-                             :class="{'border-l-4 border-l-yellow-400': activity.category === '航班'}"
-                             @click="editActivity(currentDayIndex, index)">
-                            
-                            <div class="w-[110px] h-full bg-gray-200 flex-shrink-0 relative">
-                                <img v-if="activity.image" :src="activity.image" class="w-full h-full object-cover absolute inset-0 img-loading" onload="this.classList.remove('img-loading')">
-                                <div v-else class="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-100">
-                                    <span class="material-icons text-3xl mb-1">image</span>
-                                    <span class="text-[10px]">無圖片</span>
-                                </div>
-                            </div>
-
-                            <div class="flex-1 p-3 min-w-0 flex flex-col justify-between">
-                                <div>
-                                    <div class="flex justify-between items-start mb-1">
-                                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded text-white"
-                                              :class="{
-                                                'bg-yellow-500': activity.category === '航班',
-                                                'bg-green-500': activity.category === '住宿', 
-                                                'bg-blue-500': activity.category === '景點', 
-                                                'bg-red-400': activity.category === '美食',
-                                                'bg-purple-400': activity.category === '購物',
-                                                'bg-gray-400': activity.category === '交通'
-                                              }">
-                                            {{ activity.category }}
-                                        </span>
-                                        <span class="text-xs font-bold text-gray-500 bg-gray-100 px-1 rounded">{{ activity.time }}</span>
-                                    </div>
-                                    <h4 class="font-bold text-gray-800 text-base leading-tight mb-1 truncate">{{ activity.name }}</h4>
-                                    <p class="text-xs text-gray-500 line-clamp-1">{{ activity.notes }}</p>
-                                </div>
-                                <div class="flex space-x-2 mt-1">
-                                    <button @click.stop="openGoogleMaps(activity.location)" 
-                                            class="flex-1 py-1 bg-blue-50 text-blue-600 rounded text-xs font-bold flex items-center justify-center active:bg-blue-100">
-                                        <span class="material-icons text-[14px] mr-1">near_me</span> 導航
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div v-if="index < currentDay.activities.length - 1" class="flex items-center justify-center py-2">
-                            <div class="px-3 py-1 rounded-full bg-gray-200 text-gray-600 text-xs font-bold flex items-center shadow-inner">
-                                <span class="material-icons text-xs mr-1">{{ activity.transport?.icon || 'directions_walk' }}</span>
-                                {{ activity.transport?.time || '15m' }}
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div v-if="currentDay.activities.length === 0" class="text-center py-10 text-gray-400">
-                        <span class="material-icons text-4xl mb-2">event_busy</span>
-                        <p>今天還沒有安排行程喔！</p>
-                    </div>
+                <div v-if="currentDay.activities.length === 0" class="text-center py-10 text-gray-400">
+                    <span class="material-icons text-4xl mb-2">event_note</span>
+                    <p>今天還沒有安排行程</p>
                 </div>
             </div>
-
-            <button @click="openNewActivityModal" 
-                    class="fixed bottom-8 right-6 w-14 h-14 color-secondary text-gray-900 rounded-full shadow-2xl z-50 flex items-center justify-center transform active:scale-90 transition">
-                <span class="material-icons text-3xl">add</span>
-            </button>
+            
+            <div class="h-24"></div>
         </section>
 
-        <section v-show="currentTab === 'info'" class="space-y-6 animate-fade-in">
-             <h2 class="text-2xl font-bold text-gray-800 mb-4">旅程資訊</h2>
-             <div class="bg-white p-5 rounded-2xl shadow-sm border border-blue-100">
-                <h3 class="font-bold text-lg mb-3 flex items-center text-blue-800"><span class="material-icons mr-2">flight</span> 航班資訊</h3>
-                <div class="space-y-3">
-                    <div class="bg-blue-50 p-3 rounded-xl">
-                        <p class="text-xs text-gray-500 mb-1">去程</p><p class="font-bold text-gray-800">{{ flightInfo.depart.time }}</p><p class="text-sm text-blue-600">{{ flightInfo.depart.flight }}</p>
-                    </div>
-                    <div class="bg-blue-50 p-3 rounded-xl">
-                        <p class="text-xs text-gray-500 mb-1">回程</p><p class="font-bold text-gray-800">{{ flightInfo.return.time }}</p><p class="text-sm text-blue-600">{{ flightInfo.return.flight }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-green-100">
-                 <div class="flex justify-between items-center mb-3">
-                    <h3 class="font-bold text-lg flex items-center text-green-800"><span class="material-icons mr-2">hotel</span> 住宿資訊</h3>
-                    <button @click="openAccommodationModal" class="text-green-600 text-sm font-bold bg-green-50 px-2 py-1 rounded">編輯</button>
-                 </div>
-                 <div v-for="(info, key) in accommodationInfo" :key="key" class="mb-3 border-b last:border-0 pb-3 last:pb-0">
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{{ info.city }}</p><p class="font-bold text-gray-800 text-lg">{{ info.name }}</p><p class="text-sm text-gray-500 mt-1 flex items-start"><span class="material-icons text-xs mr-1 mt-0.5">place</span> {{ info.address || '尚未輸入地址' }}</p>
-                 </div>
-            </div>
-            <div class="bg-red-50 p-5 rounded-2xl shadow-sm border border-red-100 flex items-center"><span class="material-icons text-red-500 text-3xl mr-3">emergency</span><div><p class="text-red-800 font-bold">澳洲緊急電話</p><p class="text-2xl font-black text-red-600">000</p></div></div>
-        </section>
-
-        <section v-show="currentTab === 'shopping'" class="animate-fade-in">
-             <h2 class="text-2xl font-bold mb-4 text-gray-800">購物清單</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div v-for="(item, index) in shoppingList" :key="index" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 relative group">
-                    <button @click="removeShoppingItem(index)" class="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center shadow-md z-10"><span class="material-icons text-xs">close</span></button>
-                    <div v-if="item.image" class="h-32 w-full bg-gray-100 rounded-xl mb-3 bg-cover bg-center" :style="{backgroundImage: 'url(' + item.image + ')'}"></div>
-                    <div v-else class="h-32 w-full bg-gray-50 rounded-xl mb-3 flex items-center justify-center text-gray-300"><span class="material-icons text-4xl">image</span></div>
-                    <p class="font-bold text-gray-800 text-center">{{ item.name }}</p>
-                </div>
-            </div>
-            <button @click="openNewShoppingModal" class="fixed bottom-8 right-6 w-14 h-14 color-secondary text-gray-900 rounded-full shadow-2xl z-50 flex items-center justify-center"><span class="material-icons text-3xl">add</span></button>
-        </section>
-
-        <section v-show="currentTab === 'expense'" class="animate-fade-in">
-             <h2 class="text-2xl font-bold mb-4 text-gray-800">花費記錄</h2>
-            <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 rounded-3xl shadow-lg mb-6 text-white relative overflow-hidden">
-                <div class="absolute -right-5 -top-5 w-24 h-24 bg-white opacity-10 rounded-full"></div>
-                <p class="text-blue-100 text-sm mb-1">總花費 (AUD)</p><p class="text-4xl font-bold">${{ totalExpenses.toFixed(2) }}</p>
+        <section v-show="currentTab === 'expense'">
+            <div class="bg-gray-900 rounded-3xl p-6 text-white shadow-xl mb-6 relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-32 h-32 bg-yellow-400 rounded-full blur-3xl opacity-20"></div>
+                <p class="text-gray-400 text-sm mb-1">總支出 (AUD)</p>
+                <p class="text-4xl font-bold">${{ totalExpenses.toFixed(2) }}</p>
             </div>
             <div class="space-y-3">
                 <div v-for="(exp, index) in expenseList" :key="index" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center">
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-3 text-xl"><span v-if="exp.category==='飲食'">🍔</span><span v-else-if="exp.category==='交通'">🚌</span><span v-else-if="exp.category==='購物'">🛍️</span><span v-else-if="exp.category==='住宿'">🏨</span><span v-else>💸</span></div>
-                        <div><div class="font-bold text-gray-800">{{ exp.name }}</div><div class="text-xs text-gray-400">{{ exp.date }} · {{ exp.category }}</div></div>
+                        <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mr-3 text-lg font-bold">
+                            {{ exp.name.charAt(0) }}
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">{{ exp.name }}</div>
+                            <div class="text-xs text-gray-400">{{ exp.date }} · {{ exp.category }}</div>
+                        </div>
                     </div>
-                    <div class="font-bold text-gray-800 text-lg">-${{ exp.amount }}</div>
+                    <div class="font-bold text-gray-900">- ${{ exp.amount }}</div>
                 </div>
             </div>
-            <button @click="openNewExpenseModal" class="fixed bottom-8 right-6 w-14 h-14 color-secondary text-gray-900 rounded-full shadow-2xl z-50 flex items-center justify-center"><span class="material-icons text-3xl">add</span></button>
         </section>
+
+        <section v-show="currentTab === 'info'" class="space-y-4">
+             <div class="bg-white p-5 rounded-2xl shadow-sm border-l-4 border-blue-500">
+                 <h3 class="font-bold text-lg mb-2">航班資訊</h3>
+                 <div class="space-y-2 text-sm">
+                     <div class="flex justify-between"><span class="text-gray-500">去程</span> <span class="font-bold">{{ flightInfo.depart.time }}</span></div>
+                     <div class="flex justify-between"><span class="text-gray-500">回程</span> <span class="font-bold">{{ flightInfo.return.time }}</span></div>
+                 </div>
+             </div>
+             <div class="bg-white p-5 rounded-2xl shadow-sm border-l-4 border-green-500">
+                <h3 class="font-bold text-lg mb-2">住宿資訊</h3>
+                <div v-for="(info, key) in accommodationInfo" :key="key" class="mb-3 pb-3 border-b last:border-0 last:pb-0">
+                    <p class="text-xs font-bold text-green-600 uppercase">{{ info.city }}</p>
+                    <p class="font-bold">{{ info.name }}</p>
+                </div>
+                <button @click="openAccommodationModal" class="w-full mt-2 py-2 bg-green-50 text-green-700 rounded-lg text-sm font-bold">編輯住宿</button>
+            </div>
+        </section>
+
+        <section v-show="currentTab === 'shopping'">
+            <div class="grid grid-cols-2 gap-4">
+                <div v-for="(item, index) in shoppingList" :key="index" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 relative">
+                    <button @click="removeShoppingItem(index)" class="absolute -top-2 -right-2 bg-red-100 text-red-500 w-6 h-6 rounded-full flex items-center justify-center"><span class="material-icons text-xs">close</span></button>
+                    <div v-if="item.image" class="h-28 w-full bg-gray-100 rounded-xl mb-2 bg-cover bg-center" :style="{backgroundImage: 'url(' + item.image + ')'}"></div>
+                    <div v-else class="h-28 bg-gray-50 rounded-xl mb-2 flex items-center justify-center text-gray-300"><span class="material-icons">image</span></div>
+                    <p class="font-bold text-gray-800 text-sm text-center">{{ item.name }}</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <div v-if="isSyncModalOpen" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl">
-            <h3 class="text-xl font-bold mb-2 flex items-center"><span class="material-icons mr-2">cloud_sync</span> 資料備份與還原</h3>
-            <p class="text-sm text-gray-500 mb-4">因為本網頁沒有資料庫，請使用此功能在不同裝置間傳輸資料。</p>
+    <button v-show="currentTab === 'schedule' || currentTab === 'shopping' || currentTab === 'expense'" 
+        @click="handleFabClick" 
+        class="fixed bottom-6 right-6 w-14 h-14 bg-black text-white rounded-full shadow-2xl z-40 flex items-center justify-center transform active:scale-90 transition hover:bg-gray-800">
+        <span class="material-icons text-2xl">add</span>
+    </button>
+
+    <div v-if="isSyncModalOpen" class="fixed inset-0 glass-dark z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full p-6 shadow-2xl animate-fade-in">
+            <h3 class="text-xl font-bold mb-4 flex items-center"><span class="material-icons mr-2">save</span> 資料備份</h3>
             
-            <div class="bg-blue-50 p-4 rounded-xl mb-4">
-                <h4 class="font-bold text-blue-800 text-sm mb-2">1. 備份 (從此裝置匯出)</h4>
-                <button @click="exportData" class="w-full py-2 bg-blue-600 text-white rounded-lg font-bold text-sm shadow-md hover:bg-blue-700">複製資料代碼</button>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs font-bold text-gray-400 uppercase">匯出資料 (Export)</label>
+                    <button @click="exportData" class="w-full mt-1 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl font-bold text-sm flex items-center justify-center">
+                        <span class="material-icons text-sm mr-2">content_copy</span> 複製資料代碼到剪貼簿
+                    </button>
+                </div>
+                
+                <div>
+                    <label class="text-xs font-bold text-gray-400 uppercase">還原資料 (Import)</label>
+                    <textarea v-model="importDataString" placeholder="貼上代碼..." class="w-full mt-1 p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs h-24 focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                    <button @click="importData" class="w-full mt-2 py-3 bg-blue-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-500/30">
+                        執行還原
+                    </button>
+                </div>
             </div>
-
-            <div class="bg-yellow-50 p-4 rounded-xl mb-4">
-                <h4 class="font-bold text-yellow-800 text-sm mb-2">2. 還原 (匯入到此裝置)</h4>
-                <textarea v-model="importDataString" placeholder="在此貼上資料代碼..." class="w-full p-2 text-xs border rounded-lg h-20 mb-2"></textarea>
-                <button @click="importData" class="w-full py-2 bg-yellow-500 text-white rounded-lg font-bold text-sm shadow-md hover:bg-yellow-600">還原資料</button>
-            </div>
-
-            <button @click="isSyncModalOpen = false" class="w-full py-3 bg-gray-100 text-gray-600 rounded-xl font-bold">關閉</button>
+            <button @click="isSyncModalOpen = false" class="w-full mt-6 py-3 text-gray-400 font-bold text-sm">關閉</button>
         </div>
     </div>
 
-    <div v-if="isActivityModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 shadow-2xl animate-slide-up max-h-[90vh] overflow-y-auto">
-            <h3 class="text-xl font-bold mb-4 text-gray-800">{{ editingActivityIndex === null ? '新增行程' : '編輯行程' }}</h3>
-            <div class="space-y-3">
-                <div class="w-full h-40 bg-gray-50 rounded-xl relative overflow-hidden flex items-center justify-center border-2 border-dashed border-gray-300 hover:bg-gray-100 transition">
+    <div v-if="isActivityModalOpen" class="fixed inset-0 glass-dark z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-white rounded-t-3xl sm:rounded-3xl w-full h-[85vh] sm:h-auto p-6 overflow-y-auto animate-slide-up shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">{{ editingActivityIndex === null ? '✨ 新增行程' : '✏️ 編輯行程' }}</h3>
+                <button @click="isActivityModalOpen = false" class="text-gray-400"><span class="material-icons">close</span></button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="w-full h-40 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 relative flex items-center justify-center overflow-hidden">
                     <img v-if="activityForm.image" :src="activityForm.image" class="absolute inset-0 w-full h-full object-cover">
-                    <div v-else class="text-gray-400 flex flex-col items-center"><span class="material-icons text-4xl mb-2">add_photo_alternate</span><span class="text-sm font-bold">上傳圖片</span></div>
+                    <div class="text-center text-gray-400 pointer-events-none">
+                        <span class="material-icons">add_photo_alternate</span>
+                        <p class="text-xs">點擊下方按鈕上傳</p>
+                    </div>
                 </div>
-                <input type="file" @change="handleActivityImageUpload" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                <input v-model="activityForm.name" placeholder="行程名稱" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-500">
-                <div class="flex space-x-2">
-                    <select v-model="activityForm.category" class="w-1/3 p-4 bg-gray-50 rounded-xl border-none"><option>景點</option><option>住宿</option><option>美食</option><option>購物</option><option>交通</option><option>航班</option></select>
-                    <input v-model="activityForm.time" placeholder="時間" class="w-2/3 p-4 bg-gray-50 rounded-xl border-none">
+                <input type="file" @change="handleActivityImageUpload" class="text-sm text-gray-500">
+
+                <input v-model="activityForm.name" placeholder="行程名稱" class="w-full p-4 bg-gray-50 rounded-xl font-bold text-lg outline-none focus:bg-white focus:ring-2 focus:ring-blue-100">
+                
+                <div class="flex gap-3">
+                    <select v-model="activityForm.category" class="w-1/2 p-3 bg-gray-50 rounded-xl outline-none">
+                        <option>景點</option><option>美食</option><option>購物</option><option>住宿</option><option>交通</option><option>航班</option>
+                    </select>
+                    <input v-model="activityForm.time" placeholder="時間 (例如 14:00)" class="w-1/2 p-3 bg-gray-50 rounded-xl outline-none">
                 </div>
-                <input v-model="activityForm.location" placeholder="地點 (Google Map)" class="w-full p-4 bg-gray-50 rounded-xl border-none">
-                <textarea v-model="activityForm.notes" placeholder="備註" class="w-full p-4 bg-gray-50 rounded-xl border-none h-20"></textarea>
+
+                <input v-model="activityForm.location" placeholder="地點 (供地圖導航用)" class="w-full p-4 bg-gray-50 rounded-xl outline-none">
+                <textarea v-model="activityForm.notes" placeholder="備註..." class="w-full p-4 bg-gray-50 rounded-xl outline-none h-24 resize-none"></textarea>
             </div>
-            <div class="flex gap-3 mt-6">
-                <button @click="isActivityModalOpen = false" class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold">取消</button>
-                <button @click="saveActivity" class="flex-1 py-3 color-primary text-white rounded-xl font-bold shadow-lg shadow-blue-900/20">儲存</button>
+
+            <div class="flex gap-3 mt-8">
+                <button v-if="editingActivityIndex !== null" @click="confirmDeleteActivity" class="flex-1 py-3 bg-red-50 text-red-500 rounded-xl font-bold">刪除</button>
+                <button @click="saveActivity" class="flex-[2] py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30">儲存行程</button>
             </div>
-            <button v-if="editingActivityIndex !== null" @click="confirmDeleteActivity" class="w-full py-3 text-red-400 text-sm font-bold mt-2">刪除此行程</button>
         </div>
     </div>
 
-    <div v-if="isAccommodationModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4">編輯住宿</h3>
-            <div v-for="(info, key) in accommodationInfo" :key="key" class="mb-4"><p class="font-bold text-xs text-blue-600 mb-1 uppercase">{{ info.city }}</p><input v-model="info.name" placeholder="飯店名稱" class="w-full p-3 bg-gray-50 rounded-xl border-none mb-2"><input v-model="info.address" placeholder="地址" class="w-full p-3 bg-gray-50 rounded-xl border-none"></div>
-            <div class="flex gap-3 mt-4"><button @click="isAccommodationModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="saveAccommodation" class="flex-1 py-3 color-primary text-white rounded-xl font-bold">儲存</button></div>
+    <div v-if="isAccommodationModalOpen" class="fixed inset-0 glass-dark z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full p-6">
+            <h3 class="font-bold mb-4">編輯住宿</h3>
+            <div v-for="(info, key) in accommodationInfo" :key="key" class="mb-4">
+                <p class="text-xs font-bold text-blue-500 mb-1">{{ info.city }}</p>
+                <input v-model="info.name" class="w-full p-2 bg-gray-50 rounded-lg mb-2" placeholder="飯店名稱">
+            </div>
+            <div class="flex gap-2"><button @click="isAccommodationModalOpen=false" class="flex-1 py-2 bg-gray-100 rounded-lg">取消</button><button @click="saveAccommodation" class="flex-1 py-2 bg-blue-600 text-white rounded-lg">儲存</button></div>
         </div>
     </div>
-    <div v-if="isShoppingModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4">新增購物</h3>
-            <input v-model="shoppingForm.name" placeholder="商品名稱" class="w-full p-4 bg-gray-50 rounded-xl border-none mb-3"><label class="block text-sm font-bold text-gray-500 mb-2">上傳圖片</label><input type="file" @change="handleImageUpload" class="w-full p-2 bg-gray-50 rounded-xl mb-4">
-            <div class="flex gap-3"><button @click="isShoppingModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="addShoppingItem" class="flex-1 py-3 color-primary text-white rounded-xl font-bold">新增</button></div>
+
+    <div v-if="isShoppingModalOpen" class="fixed inset-0 glass-dark z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full p-6">
+            <h3 class="font-bold mb-4">新增購物項目</h3>
+            <input v-model="shoppingForm.name" placeholder="商品名稱" class="w-full p-3 bg-gray-50 rounded-xl mb-4">
+            <input type="file" @change="handleImageUpload" class="mb-4 text-sm">
+            <div class="flex gap-2"><button @click="isShoppingModalOpen=false" class="flex-1 py-2 bg-gray-100 rounded-lg">取消</button><button @click="addShoppingItem" class="flex-1 py-2 bg-black text-white rounded-lg">新增</button></div>
         </div>
     </div>
-    <div v-if="isExpenseModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4">新增花費</h3>
-            <div class="space-y-3"><select v-model="expenseForm.category" class="w-full p-4 bg-gray-50 rounded-xl border-none"><option>飲食</option><option>交通</option><option>購物</option><option>住宿</option><option>其他</option></select><input v-model="expenseForm.name" placeholder="項目名稱" class="w-full p-4 bg-gray-50 rounded-xl border-none"><input v-model="expenseForm.amount" type="number" placeholder="金額 (AUD)" class="w-full p-4 bg-gray-50 rounded-xl border-none"><input v-model="expenseForm.date" type="date" class="w-full p-4 bg-gray-50 rounded-xl border-none"></div>
-            <div class="flex gap-3 mt-6"><button @click="isExpenseModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="addExpense" class="flex-1 py-3 color-primary text-white rounded-xl font-bold">新增</button></div>
+
+    <div v-if="isExpenseModalOpen" class="fixed inset-0 glass-dark z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full p-6">
+            <h3 class="font-bold mb-4">記帳</h3>
+            <input v-model="expenseForm.name" placeholder="項目" class="w-full p-3 bg-gray-50 rounded-xl mb-2">
+            <input v-model="expenseForm.amount" type="number" placeholder="金額" class="w-full p-3 bg-gray-50 rounded-xl mb-2">
+            <select v-model="expenseForm.category" class="w-full p-3 bg-gray-50 rounded-xl mb-4"><option>飲食</option><option>交通</option><option>購物</option><option>其他</option></select>
+            <div class="flex gap-2"><button @click="isExpenseModalOpen=false" class="flex-1 py-2 bg-gray-100 rounded-lg">取消</button><button @click="addExpense" class="flex-1 py-2 bg-black text-white rounded-lg">新增</button></div>
         </div>
     </div>
 
@@ -286,144 +293,127 @@ createApp({
         const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch(e) { return d; }};
         const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 
-        const tabs = [{ id: 'schedule', icon: 'calendar_today' }, { id: 'info', icon: 'airplane_ticket' }, { id: 'shopping', icon: 'shopping_bag' }, { id: 'expense', icon: 'receipt_long' }];
+        const tabs = [
+            { id: 'schedule', icon: 'calendar_today' }, 
+            { id: 'info', icon: 'airplane_ticket' }, 
+            { id: 'shopping', icon: 'shopping_bag' }, 
+            { id: 'expense', icon: 'receipt_long' }
+        ];
         const currentTab = ref('schedule');
         const currentDayIndex = ref(0);
 
-        // --- ✈️ 行程資料 (v8) ---
-        // 使用 v8 確保載入新結構
+        // 🌧️ 天氣邏輯：支援 sunny, rain, cloudy, storm
         const defaultItinerary = [
-            { date: 'Tue 9', weather: {icon:'wb_sunny', temp:25, feels_like:25, location:'Gold Coast→Brisbane'}, activities: [
-                { id: 101, name: '抵達黃金海岸機場 (OOL)', category: '航班', time: '09:40', notes: 'VA528。需預訂 Con-X-ion 或轉 777號巴士轉火車', location: 'Gold Coast Airport', transport:{icon:'directions_bus', time:'1h 30m'}, image: 'https://images.unsplash.com/photo-1597818967926-d249f05a1e28?q=80&w=400&auto=format&fit=crop' },
-                { id: 102, name: '布里斯班酒店 Check-in', category: '住宿', time: '12:30', notes: '寄放行李', location: 'Brisbane CBD', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop' },
-                { id: 103, name: '皇后街 (Queen St Mall)', category: '購物', time: '13:00', notes: '午餐 & 參觀市政廳鐘樓(需預約)', location: 'Queen Street Mall', transport:{icon:'directions_walk', time:'20m'}, image: 'https://images.unsplash.com/photo-1596545733568-da7181e3a12a?q=80&w=400&auto=format&fit=crop' },
-                { id: 104, name: '南岸公園 (South Bank)', category: '景點', time: '15:00', notes: 'Streets Beach 人造沙灘 & 地標拍照', location: 'South Bank Parklands', transport:{icon:'directions_boat', time:'20m'}, image: 'https://images.unsplash.com/photo-1555561338-958a74447333?q=80&w=400&auto=format&fit=crop' },
-                { id: 105, name: '晚餐：霍華德史密斯碼頭', category: '美食', time: '18:00', notes: '故事橋下看夜景', location: 'Howard Smith Wharves', transport:{icon:'local_taxi', time:'15m'}, image: 'https://images.unsplash.com/photo-1588661706649-65d1d6cb2e36?q=80&w=400&auto=format&fit=crop' }
+            { date: 'Tue 09', weather: {condition:'sunny', temp:25, feels_like:25, location:'Gold Coast'}, activities: [
+                { id: 1, name: '抵達黃金海岸機場', category: '航班', time: '09:40', notes: 'VA528', location: 'Gold Coast Airport', transport:{icon:'directions_bus', time:'1h'}, image: 'https://images.unsplash.com/photo-1597818967926-d249f05a1e28?q=80&w=400' },
+                { id: 2, name: '飯店 Check-in', category: '住宿', time: '12:00', notes: '放行李', location: 'Brisbane CBD', transport:null, image:'' }
             ]},
-            { date: 'Wed 10', weather: {icon:'wb_sunny', temp:24, feels_like:26, location:'Brisbane'}, activities: [
-                { id: 201, name: '前往 Holt Street Wharf', category: '交通', time: '08:30', notes: '從酒店出發', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
-                { id: 202, name: '搭船前往摩頓島(Moreton Island)', category: '交通', time: '10:00', notes: 'Tangalooma Resort', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'全日'}, image: 'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?q=80&w=400&auto=format&fit=crop' },
-                { id: 203, name: '島上活動 (滑沙/透明獨木舟)', category: '景點', time: '11:15 - 18:00', notes: '自由活動', location: 'Tangalooma Island Resort', transport:{icon:'waves', time:'--'}, image: 'https://images.unsplash.com/photo-1555985289-4b6248b1ba38?q=80&w=400&auto=format&fit=crop' },
-                { id: 204, name: '【重頭戲】餵食野生海豚', category: '景點', time: '18:00', notes: '日落後親手餵海豚', location: 'Tangalooma Jetty', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400&auto=format&fit=crop' },
-                { id: 205, name: '搭船返回布里斯班', category: '交通', time: '20:00', notes: '約 21:00 抵達市區', location: 'Brisbane', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1616053331454-e631988d447f?q=80&w=400&auto=format&fit=crop' }
+            { date: 'Wed 10', weather: {condition:'rain', temp:23, feels_like:25, location:'Moreton Is.'}, activities: [
+                { id: 3, name: '前往碼頭', category: '交通', time: '08:30', notes: '記得帶雨具', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?q=80&w=400' },
+                { id: 4, name: '餵食海豚', category: '景點', time: '18:00', notes: '下雨照常進行', location: 'Tangalooma', transport:null, image:'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400' }
             ]},
-            { date: 'Thu 11', weather: {icon:'wb_cloudy', temp:26, feels_like:28, location:'Brisbane→Gold Coast'}, activities: [
-                { id: 301, name: 'James Street 文青早晨', category: '美食', time: '09:00', notes: 'Hellenika 早午餐 & 逛設計師小店', location: 'James Street, Fortitude Valley', transport:{icon:'train', time:'1h'}, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400&auto=format&fit=crop' },
-                { id: 302, name: '火車移動 (布里斯班→黃金海岸)', category: '交通', time: '12:00', notes: 'Central -> Helensvale -> 轉 TX7 巴士', location: 'Helensvale Station', transport:{icon:'directions_bus', time:'15m'}, image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=400&auto=format&fit=crop' },
-                { id: 303, name: '華納兄弟電影世界(Warner Bros. Movie World)', category: '景點', time: '13:15', notes: '⚠️寄放行李。必看：13:50 飛車特技、15:30 遊行', location: 'Warner Bros. Movie World', transport:{icon:'train', time:'30m'}, image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=400&auto=format&fit=crop' },
-                { id: 304, name: '入住黃金海岸酒店', category: '住宿', time: '17:00', notes: '搭 G:link 前往衝浪者天堂', location: 'Surfers Paradise', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1585863920703-e83df0239247?q=80&w=400&auto=format&fit=crop' }
-            ]},
-            { date: 'Fri 12', weather: {icon:'thunderstorm', temp:26, feels_like:28, location:'黃金海岸'}, activities: [
-                { id: 401, name: '睡到自然醒', category: '其他', time: '上午', notes: '享受度假時光', location: '', transport:{icon:'visibility', time:'--'}, image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=400&auto=format&fit=crop' },
-                { id: 402, name: 'Q1 SkyPoint 觀景台', category: '景點', time: '11:00', notes: '77層樓俯瞰海岸線', location: 'SkyPoint Observation Deck', transport:{icon:'directions_bus', time:'20m'}, image: 'https://images.unsplash.com/photo-1569421051563-149b56f87426?q=80&w=400&auto=format&fit=crop' },
-                { id: 403, name: '伯利角 (Burleigh Heads)', category: '景點', time: '14:00', notes: '沿海步道走至 Tumgun Lookout，風景最美', location: 'Burleigh Heads', transport:{icon:'directions_walk', time:'5m'}, image: 'https://images.unsplash.com/photo-1495572093510-47e06cc8571a?q=80&w=400&auto=format&fit=crop' },
-                { id: 404, name: '晚餐：Rick Shores', category: '美食', time: '17:30', notes: '必點：Moreton Bay Bug Roll', location: 'Rick Shores', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=400&auto=format&fit=crop' }
-            ]},
-            { date: 'Sat 13', weather: {icon:'thunderstorm', temp:27, feels_like:29, location:'可倫賓'}, activities: [
-                { id: 501, name: '前往可倫賓動物園(Currumbin)', category: '交通', time: '09:00', notes: '帶著行李去 (門口可寄存)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1533514114760-4389f572ae26?q=80&w=400&auto=format&fit=crop' },
-                { id: 502, name: '可倫賓野生動物園', category: '景點', time: '09:30', notes: '⚠️進園先預約抱無尾熊拍照', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'local_taxi', time:'10m'}, image: 'https://images.unsplash.com/photo-1528028751512-42173f4d5463?q=80&w=400&auto=format&fit=crop' },
-                { id: 503, name: '前往機場 (OOL)', category: '交通', time: '12:45', notes: '離動物園僅10分鐘車程', location: 'Gold Coast Airport', transport:{icon:'flight_takeoff', time:'--'}, image: 'https://images.unsplash.com/photo-1544253101-70da5625d30e?q=80&w=400&auto=format&fit=crop' },
-                { id: 504, name: '搭機返程', category: '航班', time: '14:50', notes: 'VA528', location: 'Gold Coast Airport', transport:{icon:'home', time:'--'}, image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=400&auto=format&fit=crop' }
-            ]}
+            { date: 'Thu 11', weather: {condition:'cloudy', temp:26, feels_like:28, location:'Theme Park'}, activities: [] },
+            { date: 'Fri 12', weather: {condition:'sunny', temp:28, feels_like:30, location:'Beach'}, activities: [] }
         ];
 
-        // 綁定資料
-        const itinerary = reactive(load('itinerary_v8', defaultItinerary));
+        const itinerary = reactive(load('itinerary_v9', defaultItinerary));
         const currentDay = computed(() => itinerary[currentDayIndex.value]);
-        const openGoogleMaps = (loc) => loc ? window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`) : alert('請先設定地點');
 
-        // Modal 與 表單
+        // 🌧️ 天氣圖標對應函數
+        const getWeatherIcon = (c) => {
+            const map = { 'sunny': 'wb_sunny', 'rain': 'umbrella', 'cloudy': 'wb_cloudy', 'storm': 'thunderstorm' };
+            return map[c] || 'wb_sunny';
+        };
+        const getWeatherLabel = (c) => {
+            const map = { 'sunny': '晴朗', 'rain': '下雨', 'cloudy': '多雲', 'storm': '雷雨' };
+            return map[c] || c;
+        };
+
+        // 顏色管理
+        const getCategoryColor = (cat) => {
+            const colors = { '航班': 'bg-yellow-500', '住宿': 'bg-green-500', '景點': 'bg-blue-500', '美食': 'bg-red-400', '購物': 'bg-purple-400', '交通': 'bg-gray-400' };
+            return colors[cat] || 'bg-gray-400';
+        };
+
+        // Modal 控制
+        const isSyncModalOpen = ref(false);
+        const importDataString = ref('');
         const isActivityModalOpen = ref(false);
         const editingActivityIndex = ref(null);
-        const activityForm = reactive({ name:'', category:'', time:'', notes:'', location:'', image: '' });
-        const openNewActivityModal = () => { editingActivityIndex.value = null; Object.assign(activityForm, {name:'', category:'景點', time:'', notes:'', location:'', image:''}); isActivityModalOpen.value = true; };
+        const activityForm = reactive({ name:'', category:'景點', time:'', notes:'', location:'', image: '' });
+        
+        const openGoogleMaps = (loc) => loc ? window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`) : alert('未設定地點');
+
+        // CRUD 操作
         const editActivity = (dayIdx, actIdx) => { editingActivityIndex.value = actIdx; Object.assign(activityForm, itinerary[dayIdx].activities[actIdx]); isActivityModalOpen.value = true; };
-        const handleActivityImageUpload = (e) => { const r = new FileReader(); r.onload = x => activityForm.image = x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
         const saveActivity = () => {
             if (editingActivityIndex.value === null) itinerary[currentDayIndex.value].activities.push({...activityForm, id: Date.now()});
             else Object.assign(itinerary[currentDayIndex.value].activities[editingActivityIndex.value], activityForm);
-            save('itinerary_v8', itinerary); isActivityModalOpen.value = false;
+            save('itinerary_v9', itinerary); isActivityModalOpen.value = false;
         };
-        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v8', itinerary); isActivityModalOpen.value = false; };
+        const confirmDeleteActivity = () => { if(confirm('確定刪除?')) { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v9', itinerary); isActivityModalOpen.value = false; }};
+        const handleActivityImageUpload = (e) => { const r = new FileReader(); r.onload = x => activityForm.image = x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
 
-        // 住宿
+        // FAB 按鈕邏輯
+        const handleFabClick = () => {
+            if(currentTab.value === 'schedule') { editingActivityIndex.value = null; Object.assign(activityForm, {name:'', category:'景點', time:'', notes:'', location:'', image:''}); isActivityModalOpen.value = true; }
+            else if(currentTab.value === 'shopping') openNewShoppingModal();
+            else if(currentTab.value === 'expense') openNewExpenseModal();
+        };
+
+        // 其他數據與Modal (簡化綁定)
+        const accommodationInfo = reactive(load('accom_v9', { brisbane: {city:'Brisbane', name:'待填寫'}, gc: {city:'Gold Coast', name:'待填寫'} }));
         const isAccommodationModalOpen = ref(false);
-        const accommodationInfo = reactive(load('accom_v8', { brisbane: {city:'Brisbane (Day 1-2)', name:'待填寫', address:''}, gc: {city:'Gold Coast (Day 3-4)', name:'待填寫', address:''} }));
+        const saveAccommodation = () => { save('accom_v9', accommodationInfo); isAccommodationModalOpen.value = false; };
         const openAccommodationModal = () => isAccommodationModalOpen.value = true;
-        const saveAccommodation = () => { save('accom_v8', accommodationInfo); isAccommodationModalOpen.value = false; };
 
-        // 購物
+        const shoppingList = reactive(load('shop_v9', []));
         const isShoppingModalOpen = ref(false);
-        const shoppingList = reactive(load('shop_v8', []));
         const shoppingForm = reactive({ name:'', image: null });
         const openNewShoppingModal = () => { shoppingForm.name=''; shoppingForm.image=null; isShoppingModalOpen.value = true; };
         const handleImageUpload = (e) => { const r = new FileReader(); r.onload=x=>shoppingForm.image=x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
-        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v8', shoppingList); isShoppingModalOpen.value = false; };
-        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v8', shoppingList); };
+        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v9', shoppingList); isShoppingModalOpen.value = false; };
+        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v9', shoppingList); };
 
-        // 花費
+        const expenseList = reactive(load('exp_v9', []));
         const isExpenseModalOpen = ref(false);
-        const expenseList = reactive(load('exp_v8', []));
         const expenseForm = reactive({ category:'飲食', name:'', amount:0, date: new Date().toISOString().split('T')[0] });
         const openNewExpenseModal = () => { expenseForm.name=''; expenseForm.amount=''; isExpenseModalOpen.value = true; };
-        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v8', expenseList); isExpenseModalOpen.value = false; };
+        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v9', expenseList); isExpenseModalOpen.value = false; };
         const totalExpenses = computed(() => expenseList.reduce((sum, i) => sum + Number(i.amount||0), 0));
-        
-        // 航班
-        const flightInfo = { depart: {time:'09:40 抵達 (OOL)', flight:'VA511'}, return: {time:'14:50 起飛 (OOL)', flight:'VA528'} };
 
-        // --- ☁️ 資料同步功能 (v8 新增) ---
-        const isSyncModalOpen = ref(false);
-        const importDataString = ref('');
+        const flightInfo = { depart: {time:'09:40', flight:'VA511'}, return: {time:'14:50', flight:'VA528'} };
 
+        // ☁️ 備份邏輯優化
         const exportData = () => {
-            // 將所有資料打包成 JSON 字串
-            const allData = {
-                itinerary: itinerary,
-                accommodation: accommodationInfo,
-                shopping: shoppingList,
-                expenses: expenseList
-            };
-            const dataString = JSON.stringify(allData);
-            navigator.clipboard.writeText(dataString).then(() => alert('資料代碼已複製！請傳送到另一台裝置。'));
+            const data = JSON.stringify({ itinerary, accommodationInfo, shoppingList, expenseList });
+            navigator.clipboard.writeText(data)
+                .then(() => alert('✅ 資料代碼已複製！\n請貼上到其他裝置的「還原資料」框中。'))
+                .catch(() => prompt("自動複製失敗，請手動複製以下代碼：", data));
         };
-
         const importData = () => {
             try {
-                const data = JSON.parse(importDataString.value);
-                if (data.itinerary) {
-                    // 更新所有資料
-                    Object.assign(itinerary, data.itinerary);
-                    Object.assign(accommodationInfo, data.accommodation);
-                    shoppingList.splice(0, shoppingList.length, ...data.shopping);
-                    expenseList.splice(0, expenseList.length, ...data.expenses);
-                    
-                    // 儲存到 LocalStorage
-                    save('itinerary_v8', itinerary);
-                    save('accom_v8', accommodationInfo);
-                    save('shop_v8', shoppingList);
-                    save('exp_v8', expenseList);
-                    
-                    alert('資料還原成功！');
-                    isSyncModalOpen.value = false;
-                } else {
-                    alert('資料格式錯誤');
-                }
-            } catch (e) {
-                alert('無效的資料代碼');
-            }
+                const d = JSON.parse(importDataString.value);
+                if(d.itinerary) {
+                    Object.assign(itinerary, d.itinerary);
+                    Object.assign(accommodationInfo, d.accommodationInfo);
+                    shoppingList.splice(0, shoppingList.length, ...d.shoppingList);
+                    expenseList.splice(0, expenseList.length, ...d.expenseList);
+                    save('itinerary_v9', itinerary); save('accom_v9', accommodationInfo); save('shop_v9', shoppingList); save('exp_v9', expenseList);
+                    alert('✅ 資料還原成功！'); isSyncModalOpen.value = false;
+                } else alert('❌ 代碼格式錯誤');
+            } catch(e) { alert('❌ 無效的代碼'); }
         };
 
         return {
             tabs, currentTab, currentDayIndex, itinerary, currentDay,
             flightInfo, accommodationInfo, shoppingList, expenseList, totalExpenses,
-            isActivityModalOpen, activityForm, editingActivityIndex, openNewActivityModal, editActivity, saveActivity, confirmDeleteActivity, handleActivityImageUpload,
+            isSyncModalOpen, exportData, importData, importDataString,
+            isActivityModalOpen, activityForm, editingActivityIndex, editActivity, saveActivity, confirmDeleteActivity, handleActivityImageUpload,
+            handleFabClick, getWeatherIcon, getWeatherLabel, getCategoryColor, openGoogleMaps,
             isAccommodationModalOpen, openAccommodationModal, saveAccommodation,
             isShoppingModalOpen, shoppingForm, openNewShoppingModal, handleImageUpload, addShoppingItem, removeShoppingItem,
-            isExpenseModalOpen, expenseForm, openNewExpenseModal, addExpense,
-            openGoogleMaps,
-            // Sync
-            isSyncModalOpen, exportData, importData, importDataString
+            isExpenseModalOpen, expenseForm, openNewExpenseModal, addExpense
         };
     }
 }).mount('#app');
