@@ -23,26 +23,38 @@
         
         /* 避免 Vue 載入前看到亂碼 */
         [v-cloak] { display: none; }
+
+        /* 卡片圖片顯示模式 */
+        .card-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
 
 <div id="app" class="relative min-h-screen" v-cloak>
     
-    <header class="relative w-full h-[280px] overflow-hidden color-primary">
+    <header class="relative w-full h-[300px] overflow-hidden color-primary">
         <img src="Gemini Generated.png" alt="澳洲風格橫幅" 
              class="absolute inset-0 w-full h-full object-cover opacity-90">
              
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-10">
-             <div class="text-3xl font-bold text-white drop-shadow-lg p-2 rounded-lg bg-black/20 backdrop-blur-sm">
-                🇦🇺 2025Dec Brisbane & Gold Coast ☀️
+        <div class="absolute inset-0 bg-gradient-to-t from-[#004c8f] via-transparent to-transparent opacity-90"></div>
+
+        <div class="absolute bottom-12 left-5 z-10">
+             <div class="text-white drop-shadow-md">
+                <p class="text-sm font-medium opacity-90 mb-1 tracking-wider uppercase">Trip Planner</p>
+                <h1 class="text-3xl font-bold leading-tight">
+                    🇦🇺 2025 Dec <br>
+                    Brisbane & Gold Coast ☀️
+                </h1>
              </div>
         </div>
-        
-        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#004c8f] to-transparent opacity-50"></div>
     </header>
 
-    <div class="absolute top-[230px] right-4 flex space-x-2 z-40">
+    <div class="absolute top-[250px] right-4 flex space-x-2 z-40">
         <button v-for="tab in tabs" :key="tab.id" @click="currentTab = tab.id"
                 :class="{'color-secondary text-gray-900': currentTab === tab.id, 'bg-white text-gray-400': currentTab !== tab.id}"
                 class="p-3 rounded-full shadow-lg transition duration-300 transform active:scale-95 flex items-center justify-center w-12 h-12">
@@ -50,7 +62,7 @@
         </button>
     </div>
 
-    <main class="relative z-30 -mt-10 bg-[#f7f9fc] rounded-t-[40px] px-5 pt-16 pb-32 min-h-screen shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+    <main class="relative z-30 -mt-6 bg-[#f7f9fc] rounded-t-[30px] px-5 pt-14 pb-32 min-h-screen shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
         
         <section v-show="currentTab === 'schedule'" class="animate-fade-in">
             <div class="flex items-center mb-4">
@@ -82,53 +94,42 @@
                 <div class="space-y-4">
                     <div v-for="(activity, index) in currentDay.activities" :key="activity.id">
                         
-                        <div v-if="activity.category === '航班'" class="p-5 bg-white rounded-2xl shadow-md border-l-4 border-yellow-500">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-bold text-lg text-gray-800 flex items-center">
-                                    <span class="material-icons mr-2 text-blue-600">flight_land</span> 
-                                    {{ activity.name }}
-                                </h3>
-                            </div>
-                            <div class="text-sm text-gray-600 space-y-1 bg-gray-50 p-3 rounded-lg">
-                                <p><span class="font-bold text-gray-500">時間:</span> {{ activity.time }}</p>
-                                <p><span class="font-bold text-gray-500">備註:</span> {{ activity.notes }}</p>
-                            </div>
-                        </div>
-
-                        <div v-else class="relative p-5 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition"
+                        <div class="relative bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex"
+                             :class="{'border-l-4 border-l-yellow-400': activity.category === '航班'}"
                              @click="editActivity(currentDayIndex, index)">
                             
-                            <div class="absolute top-4 right-4 text-xs font-bold px-2 py-1 rounded text-white"
-                                 :class="{
-                                    'bg-green-500': activity.category === '住宿', 
-                                    'bg-blue-500': activity.category === '景點', 
-                                    'bg-red-400': activity.category === '美食',
-                                    'bg-purple-400': activity.category === '購物',
-                                    'bg-gray-400': activity.category === '交通'
-                                 }">
-                                {{ activity.category }}
+                            <div class="w-[100px] h-auto bg-gray-200 flex-shrink-0 relative">
+                                <img v-if="activity.image" :src="activity.image" class="w-full h-full object-cover absolute inset-0">
+                                <div v-else class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-100">
+                                    <span class="material-icons text-3xl">image</span>
+                                </div>
                             </div>
 
-                            <h4 class="font-bold text-lg text-gray-800 pr-12 mb-2">{{ activity.name }}</h4>
-                            
-                            <div class="space-y-2">
-                                <p v-if="activity.time" class="text-sm text-gray-600 flex items-center">
-                                    <span class="material-icons text-sm mr-1 text-gray-400">schedule</span>
-                                    {{ activity.time }}
-                                </p>
-                                <p class="text-sm text-gray-600 line-clamp-2 bg-gray-50 p-2 rounded">
-                                    {{ activity.notes }}
-                                </p>
-                            </div>
-                            
-                            <div class="mt-4 flex space-x-3 border-t pt-3">
-                                <button @click.stop="openGoogleMaps(activity.location)" 
-                                        class="flex-1 flex items-center justify-center py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-bold active:bg-blue-100">
-                                    <span class="material-icons text-sm mr-1">near_me</span> 導航
-                                </button>
-                                <button class="px-3 py-2 bg-gray-50 text-gray-400 rounded-lg text-sm" @click.stop="editActivity(currentDayIndex, index)">
-                                    <span class="material-icons text-sm">edit</span>
-                                </button>
+                            <div class="flex-1 p-3 min-w-0">
+                                <div class="flex justify-between items-start mb-1">
+                                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded text-white"
+                                          :class="{
+                                            'bg-yellow-500': activity.category === '航班',
+                                            'bg-green-500': activity.category === '住宿', 
+                                            'bg-blue-500': activity.category === '景點', 
+                                            'bg-red-400': activity.category === '美食',
+                                            'bg-purple-400': activity.category === '購物',
+                                            'bg-gray-400': activity.category === '交通'
+                                          }">
+                                        {{ activity.category }}
+                                    </span>
+                                    <span class="text-xs font-bold text-gray-500">{{ activity.time }}</span>
+                                </div>
+
+                                <h4 class="font-bold text-gray-800 text-base leading-tight mb-1 truncate">{{ activity.name }}</h4>
+                                <p class="text-xs text-gray-500 line-clamp-2 mb-2">{{ activity.notes }}</p>
+
+                                <div class="flex space-x-2">
+                                    <button @click.stop="openGoogleMaps(activity.location)" 
+                                            class="flex-1 py-1 bg-blue-50 text-blue-600 rounded text-xs font-bold flex items-center justify-center">
+                                        <span class="material-icons text-[14px] mr-1">near_me</span> 導航
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -244,16 +245,25 @@
     </main>
 
     <div v-if="isActivityModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 shadow-2xl animate-slide-up">
+        <div class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 shadow-2xl animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 class="text-xl font-bold mb-4 text-gray-800">{{ editingActivityIndex === null ? '新增行程' : '編輯行程' }}</h3>
             <div class="space-y-3">
+                <div class="w-full h-32 bg-gray-100 rounded-xl relative overflow-hidden flex items-center justify-center border-2 border-dashed border-gray-300">
+                    <img v-if="activityForm.image" :src="activityForm.image" class="absolute inset-0 w-full h-full object-cover">
+                    <div v-else class="text-gray-400 flex flex-col items-center">
+                        <span class="material-icons text-3xl">add_photo_alternate</span>
+                        <span class="text-xs">點擊下方按鈕上傳圖片</span>
+                    </div>
+                </div>
+                <input type="file" @change="handleActivityImageUpload" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+
                 <input v-model="activityForm.name" placeholder="行程名稱" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-500">
                 <div class="flex space-x-2">
                     <select v-model="activityForm.category" class="w-1/3 p-4 bg-gray-50 rounded-xl border-none"><option>景點</option><option>住宿</option><option>美食</option><option>購物</option><option>交通</option><option>航班</option></select>
                     <input v-model="activityForm.time" placeholder="時間 (09:00)" class="w-2/3 p-4 bg-gray-50 rounded-xl border-none">
                 </div>
                 <input v-model="activityForm.location" placeholder="地點 (Google Map 關鍵字)" class="w-full p-4 bg-gray-50 rounded-xl border-none">
-                <textarea v-model="activityForm.notes" placeholder="備註 (票價、注意事項)" class="w-full p-4 bg-gray-50 rounded-xl border-none h-24"></textarea>
+                <textarea v-model="activityForm.notes" placeholder="備註 (票價、注意事項)" class="w-full p-4 bg-gray-50 rounded-xl border-none h-20"></textarea>
             </div>
             <div class="flex gap-3 mt-6">
                 <button @click="isActivityModalOpen = false" class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold">取消</button>
@@ -314,7 +324,7 @@ const { createApp, ref, reactive, computed } = Vue;
 
 createApp({
     setup() {
-        // --- 狀態管理 (使用 _v5 版本號強制更新資料) ---
+        // --- 狀態管理 (使用 _v6 版本號，加入圖片欄位) ---
         const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch(e) { return d; }};
         const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 
@@ -325,18 +335,19 @@ createApp({
         const currentTab = ref('schedule');
         const currentDayIndex = ref(0);
 
-        // --- ✈️ 行程資料 (v5) ---
+        // --- ✈️ 行程資料 (v6 - 加入圖片) ---
+        // 圖片來源使用 Unsplash Source 作為示範，您可以手動更換
         const defaultItinerary = [
             // Day 1
             { 
                 date: 'Tue 9', 
                 weather: {icon:'wb_sunny', temp:25, feels_like:27, location:'布里斯班'}, 
                 activities: [
-                    { id: 101, name: '抵達黃金海岸機場 (OOL)', category: '航班', time: '09:40', notes: 'VA528。需預訂 Con-X-ion 或轉 777號巴士轉火車', location: 'Gold Coast Airport', transport:{icon:'directions_bus', time:'1h 30m'} },
-                    { id: 102, name: '布里斯班酒店 Check-in', category: '住宿', time: '12:30', notes: '寄放行李', location: 'Brisbane CBD', transport:{icon:'directions_walk', time:'15m'} },
-                    { id: 103, name: '皇后街 (Queen St Mall)', category: '購物', time: '13:00', notes: '午餐 & 參觀市政廳鐘樓(需預約)', location: 'Queen Street Mall', transport:{icon:'directions_walk', time:'20m'} },
-                    { id: 104, name: '南岸公園 (South Bank)', category: '景點', time: '15:00', notes: 'Streets Beach 人造沙灘 & 地標拍照', location: 'South Bank Parklands', transport:{icon:'directions_boat', time:'20m'} },
-                    { id: 105, name: '晚餐：霍華德史密斯碼頭', category: '美食', time: '18:00', notes: '故事橋下看夜景', location: 'Howard Smith Wharves', transport:{icon:'local_taxi', time:'15m'} }
+                    { id: 101, name: '抵達黃金海岸機場 (OOL)', category: '航班', time: '09:40', notes: 'VA528。需預訂 Con-X-ion 或轉 777號巴士轉火車', location: 'Gold Coast Airport', transport:{icon:'directions_bus', time:'1h 30m'}, image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=400&auto=format&fit=crop' },
+                    { id: 102, name: '布里斯班酒店 Check-in', category: '住宿', time: '12:30', notes: '寄放行李', location: 'Brisbane CBD', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop' },
+                    { id: 103, name: '皇后街 (Queen St Mall)', category: '購物', time: '13:00', notes: '午餐 & 參觀市政廳鐘樓(需預約)', location: 'Queen Street Mall', transport:{icon:'directions_walk', time:'20m'}, image: 'https://images.unsplash.com/photo-1596545733568-da7181e3a12a?q=80&w=400&auto=format&fit=crop' },
+                    { id: 104, name: '南岸公園 (South Bank)', category: '景點', time: '15:00', notes: 'Streets Beach 人造沙灘 & 地標拍照', location: 'South Bank Parklands', transport:{icon:'directions_boat', time:'20m'}, image: 'https://images.unsplash.com/photo-1555561338-958a74447333?q=80&w=400&auto=format&fit=crop' },
+                    { id: 105, name: '晚餐：霍華德史密斯碼頭', category: '美食', time: '18:00', notes: '故事橋下看夜景', location: 'Howard Smith Wharves', transport:{icon:'local_taxi', time:'15m'}, image: 'https://images.unsplash.com/photo-1588661706649-65d1d6cb2e36?q=80&w=400&auto=format&fit=crop' }
                 ]
             },
             // Day 2
@@ -344,11 +355,11 @@ createApp({
                 date: 'Wed 10', 
                 weather: {icon:'wb_cloudy', temp:24, feels_like:26, location:'摩頓島'}, 
                 activities: [
-                    { id: 201, name: '前往 Holt Street Wharf', category: '交通', time: '08:30', notes: '從飯店出發', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'} },
-                    { id: 202, name: '搭船前往摩頓島(Moreton Island)', category: '交通', time: '10:00', notes: 'Tangalooma Resort', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'全日'} },
-                    { id: 203, name: '島上活動 (滑沙/透明獨木舟)', category: '景點', time: '11:15 - 18:00', notes: '自由活動', location: 'Tangalooma Island Resort', transport:{icon:'waves', time:'--'} },
-                    { id: 204, name: '【重頭戲】餵食野生海豚', category: '景點', time: '18:00', notes: '日落後親手餵海豚', location: 'Tangalooma Jetty', transport:{icon:'directions_boat', time:'75m'} },
-                    { id: 205, name: '搭船返回布里斯班', category: '交通', time: '20:00', notes: '約 21:00 抵達市區', location: 'Brisbane', transport:{icon:'bed', time:'--'} }
+                    { id: 201, name: '前往 Holt Street Wharf', category: '交通', time: '08:30', notes: '從飯店出發', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
+                    { id: 202, name: '搭船前往摩頓島(Moreton Island)', category: '交通', time: '10:00', notes: 'Tangalooma Resort', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'全日'}, image: 'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?q=80&w=400&auto=format&fit=crop' },
+                    { id: 203, name: '島上活動 (滑沙/透明獨木舟)', category: '景點', time: '11:15 - 18:00', notes: '自由活動', location: 'Tangalooma Island Resort', transport:{icon:'waves', time:'--'}, image: 'https://images.unsplash.com/photo-1555985289-4b6248b1ba38?q=80&w=400&auto=format&fit=crop' },
+                    { id: 204, name: '【重頭戲】餵食野生海豚', category: '景點', time: '18:00', notes: '日落後親手餵海豚', location: 'Tangalooma Jetty', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400&auto=format&fit=crop' },
+                    { id: 205, name: '搭船返回布里斯班', category: '交通', time: '20:00', notes: '約 21:00 抵達市區', location: 'Brisbane', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1616053331454-e631988d447f?q=80&w=400&auto=format&fit=crop' }
                 ]
             },
             // Day 3
@@ -356,10 +367,10 @@ createApp({
                 date: 'Thu 11', 
                 weather: {icon:'wb_sunny', temp:26, feels_like:28, location:'移動日'}, 
                 activities: [
-                    { id: 301, name: 'James Street 文青早晨', category: '美食', time: '09:00', notes: 'Hellenika 早午餐 & 逛設計師小店', location: 'James Street, Fortitude Valley', transport:{icon:'train', time:'1h'} },
-                    { id: 302, name: '火車移動 (布里斯班→黃金海岸)', category: '交通', time: '12:00', notes: 'Central -> Helensvale -> 轉 TX7 巴士', location: 'Helensvale Station', transport:{icon:'directions_bus', time:'15m'} },
-                    { id: 303, name: '華納兄弟電影世界', category: '景點', time: '13:15', notes: '⚠️寄放行李。必看：13:50 飛車特技、15:30 遊行', location: 'Warner Bros. Movie World', transport:{icon:'train', time:'30m'} },
-                    { id: 304, name: '入住黃金海岸酒店', category: '住宿', time: '17:00', notes: '搭 G:link 前往衝浪者天堂', location: 'Surfers Paradise', transport:{icon:'restaurant', time:'--'} }
+                    { id: 301, name: 'James Street 文青早晨', category: '美食', time: '09:00', notes: 'Hellenika 早午餐 & 逛設計師小店', location: 'James Street, Fortitude Valley', transport:{icon:'train', time:'1h'}, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400&auto=format&fit=crop' },
+                    { id: 302, name: '火車移動 (布里斯班→黃金海岸)', category: '交通', time: '12:00', notes: 'Central -> Helensvale -> 轉 TX7 巴士', location: 'Helensvale Station', transport:{icon:'directions_bus', time:'15m'}, image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=400&auto=format&fit=crop' },
+                    { id: 303, name: '華納兄弟電影世界', category: '景點', time: '13:15', notes: '⚠️寄放行李。必看：13:50 飛車特技、15:30 遊行', location: 'Warner Bros. Movie World', transport:{icon:'train', time:'30m'}, image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=400&auto=format&fit=crop' },
+                    { id: 304, name: '入住黃金海岸酒店', category: '住宿', time: '17:00', notes: '搭 G:link 前往衝浪者天堂', location: 'Surfers Paradise', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1585863920703-e83df0239247?q=80&w=400&auto=format&fit=crop' }
                 ]
             },
             // Day 4
@@ -367,10 +378,10 @@ createApp({
                 date: 'Fri 12', 
                 weather: {icon:'wb_sunny', temp:28, feels_like:30, location:'黃金海岸'}, 
                 activities: [
-                    { id: 401, name: '睡到自然醒', category: '其他', time: '上午', notes: '享受度假時光', location: '', transport:{icon:'visibility', time:'--'} },
-                    { id: 402, name: 'Q1 SkyPoint 觀景台', category: '景點', time: '11:00', notes: '77層樓俯瞰海岸線', location: 'SkyPoint Observation Deck', transport:{icon:'directions_bus', time:'20m'} },
-                    { id: 403, name: '伯利角 (Burleigh Heads)', category: '景點', time: '14:00', notes: '沿海步道走至 Tumgun Lookout，風景最美', location: 'Burleigh Heads', transport:{icon:'directions_walk', time:'5m'} },
-                    { id: 404, name: '晚餐：Rick Shores', category: '美食', time: '17:30', notes: '必點：Moreton Bay Bug Roll', location: 'Rick Shores', transport:{icon:'bed', time:'--'} }
+                    { id: 401, name: '睡到自然醒', category: '其他', time: '上午', notes: '享受度假時光', location: '', transport:{icon:'visibility', time:'--'}, image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=400&auto=format&fit=crop' },
+                    { id: 402, name: 'Q1 SkyPoint 觀景台', category: '景點', time: '11:00', notes: '77層樓俯瞰海岸線', location: 'SkyPoint Observation Deck', transport:{icon:'directions_bus', time:'20m'}, image: 'https://images.unsplash.com/photo-1569421051563-149b56f87426?q=80&w=400&auto=format&fit=crop' },
+                    { id: 403, name: '伯利角 (Burleigh Heads)', category: '景點', time: '14:00', notes: '沿海步道走至 Tumgun Lookout，風景最美', location: 'Burleigh Heads', transport:{icon:'directions_walk', time:'5m'}, image: 'https://images.unsplash.com/photo-1495572093510-47e06cc8571a?q=80&w=400&auto=format&fit=crop' },
+                    { id: 404, name: '晚餐：Rick Shores', category: '美食', time: '17:30', notes: '必點：Moreton Bay Bug Roll', location: 'Rick Shores', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=400&auto=format&fit=crop' }
                 ]
             },
             // Day 5
@@ -378,16 +389,16 @@ createApp({
                 date: 'Sat 13', 
                 weather: {icon:'wb_sunny', temp:27, feels_like:29, location:'可倫賓'}, 
                 activities: [
-                    { id: 501, name: '前往可倫賓動物園(Currumbin Wildlife Sanctuary)', category: '交通', time: '09:00', notes: '帶著行李去 (門口可寄存)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'} },
-                    { id: 502, name: '可倫賓野生動物園(Currumbin Wildlife Sanctuary)', category: '景點', time: '09:30', notes: '⚠️進園先預約抱無尾熊拍照', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'local_taxi', time:'10m'} },
-                    { id: 503, name: '前往機場 (OOL)', category: '交通', time: '12:45', notes: '離動物園僅10分鐘車程', location: 'Gold Coast Airport', transport:{icon:'flight_takeoff', time:'--'} },
-                    { id: 504, name: '搭機返程', category: '航班', time: '14:50', notes: 'VA528', location: 'Gold Coast Airport', transport:{icon:'home', time:'--'} }
+                    { id: 501, name: '前往可倫賓動物園(Currumbin)', category: '交通', time: '09:00', notes: '帶著行李去 (門口可寄存)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1533514114760-4389f572ae26?q=80&w=400&auto=format&fit=crop' },
+                    { id: 502, name: '可倫賓野生動物園', category: '景點', time: '09:30', notes: '⚠️進園先預約抱無尾熊拍照', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'local_taxi', time:'10m'}, image: 'https://images.unsplash.com/photo-1528028751512-42173f4d5463?q=80&w=400&auto=format&fit=crop' },
+                    { id: 503, name: '前往機場 (OOL)', category: '交通', time: '12:45', notes: '離動物園僅10分鐘車程', location: 'Gold Coast Airport', transport:{icon:'flight_takeoff', time:'--'}, image: 'https://images.unsplash.com/photo-1544253101-70da5625d30e?q=80&w=400&auto=format&fit=crop' },
+                    { id: 504, name: '搭機返程', category: '航班', time: '14:50', notes: 'VA528', location: 'Gold Coast Airport', transport:{icon:'home', time:'--'}, image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=400&auto=format&fit=crop' }
                 ]
             }
         ];
 
-        // 這裡把 key 改成 'itinerary_v5'
-        const itinerary = reactive(load('itinerary_v5', defaultItinerary));
+        // 這裡把 key 改成 'itinerary_v6'
+        const itinerary = reactive(load('itinerary_v6', defaultItinerary));
         const currentDay = computed(() => itinerary[currentDayIndex.value]);
 
         const openGoogleMaps = (loc) => loc ? window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`) : alert('請先設定地點');
@@ -395,40 +406,48 @@ createApp({
         // Modal: 行程
         const isActivityModalOpen = ref(false);
         const editingActivityIndex = ref(null);
-        const activityForm = reactive({ name:'', category:'', time:'', notes:'', location:'' });
-        const openNewActivityModal = () => { editingActivityIndex.value = null; Object.assign(activityForm, {name:'', category:'景點', time:'', notes:'', location:''}); isActivityModalOpen.value = true; };
+        const activityForm = reactive({ name:'', category:'', time:'', notes:'', location:'', image: '' }); // 加入 image
+        const openNewActivityModal = () => { editingActivityIndex.value = null; Object.assign(activityForm, {name:'', category:'景點', time:'', notes:'', location:'', image:''}); isActivityModalOpen.value = true; };
         const editActivity = (dayIdx, actIdx) => { editingActivityIndex.value = actIdx; Object.assign(activityForm, itinerary[dayIdx].activities[actIdx]); isActivityModalOpen.value = true; };
+        
+        // 處理行程圖片上傳
+        const handleActivityImageUpload = (e) => { 
+            const r = new FileReader(); 
+            r.onload = x => activityForm.image = x.target.result; 
+            if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); 
+        };
+
         const saveActivity = () => {
             if (editingActivityIndex.value === null) itinerary[currentDayIndex.value].activities.push({...activityForm, id: Date.now()});
             else Object.assign(itinerary[currentDayIndex.value].activities[editingActivityIndex.value], activityForm);
-            save('itinerary_v5', itinerary); isActivityModalOpen.value = false;
+            save('itinerary_v6', itinerary); isActivityModalOpen.value = false;
         };
-        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v5', itinerary); isActivityModalOpen.value = false; };
+        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v6', itinerary); isActivityModalOpen.value = false; };
 
         // Modal: 住宿
         const isAccommodationModalOpen = ref(false);
-        const accommodationInfo = reactive(load('accom_v5', {
+        const accommodationInfo = reactive(load('accom_v6', {
             brisbane: {city:'Brisbane (Day 1-2)', name:'待填寫', address:''}, 
             gc: {city:'Gold Coast (Day 3-4)', name:'待填寫', address:''}
         }));
         const openAccommodationModal = () => isAccommodationModalOpen.value = true;
-        const saveAccommodation = () => { save('accom_v5', accommodationInfo); isAccommodationModalOpen.value = false; };
+        const saveAccommodation = () => { save('accom_v6', accommodationInfo); isAccommodationModalOpen.value = false; };
 
         // Modal: 購物
         const isShoppingModalOpen = ref(false);
-        const shoppingList = reactive(load('shop_v5', []));
+        const shoppingList = reactive(load('shop_v6', []));
         const shoppingForm = reactive({ name:'', image: null });
         const openNewShoppingModal = () => { shoppingForm.name=''; shoppingForm.image=null; isShoppingModalOpen.value = true; };
         const handleImageUpload = (e) => { const r = new FileReader(); r.onload=x=>shoppingForm.image=x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
-        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v5', shoppingList); isShoppingModalOpen.value = false; };
-        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v5', shoppingList); };
+        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v6', shoppingList); isShoppingModalOpen.value = false; };
+        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v6', shoppingList); };
 
         // Modal: 花費
         const isExpenseModalOpen = ref(false);
-        const expenseList = reactive(load('exp_v5', []));
+        const expenseList = reactive(load('exp_v6', []));
         const expenseForm = reactive({ category:'飲食', name:'', amount:0, date: new Date().toISOString().split('T')[0] });
         const openNewExpenseModal = () => { expenseForm.name=''; expenseForm.amount=''; isExpenseModalOpen.value = true; };
-        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v5', expenseList); isExpenseModalOpen.value = false; };
+        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v6', expenseList); isExpenseModalOpen.value = false; };
         const totalExpenses = computed(() => expenseList.reduce((sum, i) => sum + Number(i.amount||0), 0));
         
         // 資訊頁資料
@@ -440,7 +459,7 @@ createApp({
         return {
             tabs, currentTab, currentDayIndex, itinerary, currentDay,
             flightInfo, accommodationInfo, shoppingList, expenseList, totalExpenses,
-            isActivityModalOpen, activityForm, editingActivityIndex, openNewActivityModal, editActivity, saveActivity, confirmDeleteActivity,
+            isActivityModalOpen, activityForm, editingActivityIndex, openNewActivityModal, editActivity, saveActivity, confirmDeleteActivity, handleActivityImageUpload,
             isAccommodationModalOpen, openAccommodationModal, saveAccommodation,
             isShoppingModalOpen, shoppingForm, openNewShoppingModal, handleImageUpload, addShoppingItem, removeShoppingItem,
             isExpenseModalOpen, expenseForm, openNewExpenseModal, addExpense,
