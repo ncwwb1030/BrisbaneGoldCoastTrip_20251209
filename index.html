@@ -35,7 +35,7 @@
              
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-10">
              <div class="text-3xl font-bold text-white drop-shadow-lg p-2 rounded-lg bg-black/20 backdrop-blur-sm">
-                🇦🇺 昆士蘭陽光之旅 ☀️
+                🇦🇺 2025Dec Brisbane & Gold Coast ☀️
              </div>
         </div>
         
@@ -160,12 +160,12 @@
                 <h3 class="font-bold text-lg mb-3 flex items-center text-blue-800"><span class="material-icons mr-2">flight</span> 航班資訊</h3>
                 <div class="space-y-3">
                     <div class="bg-blue-50 p-3 rounded-xl">
-                        <p class="text-xs text-gray-500 mb-1">去程 (TPE → MEL)</p>
+                        <p class="text-xs text-gray-500 mb-1">去程 (SYD → OOL)</p>
                         <p class="font-bold text-gray-800">{{ flightInfo.depart.time }}</p>
                         <p class="text-sm text-blue-600">{{ flightInfo.depart.flight }}</p>
                     </div>
                     <div class="bg-blue-50 p-3 rounded-xl">
-                        <p class="text-xs text-gray-500 mb-1">回程 (OOL → TPE)</p>
+                        <p class="text-xs text-gray-500 mb-1">回程 (OOL → SYD)</p>
                         <p class="font-bold text-gray-800">{{ flightInfo.return.time }}</p>
                         <p class="text-sm text-blue-600">{{ flightInfo.return.flight }}</p>
                     </div>
@@ -345,7 +345,7 @@ createApp({
                 weather: {icon:'wb_cloudy', temp:24, feels_like:26, location:'摩頓島'}, 
                 activities: [
                     { id: 201, name: '前往 Holt Street Wharf', category: '交通', time: '08:30', notes: '從飯店出發', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'} },
-                    { id: 202, name: '搭船前往摩頓島', category: '交通', time: '10:00', notes: 'Tangalooma Resort', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'全日'} },
+                    { id: 202, name: '搭船前往摩頓島(Moreton Island)', category: '交通', time: '10:00', notes: 'Tangalooma Resort', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'全日'} },
                     { id: 203, name: '島上活動 (滑沙/透明獨木舟)', category: '景點', time: '11:15 - 18:00', notes: '自由活動', location: 'Tangalooma Island Resort', transport:{icon:'waves', time:'--'} },
                     { id: 204, name: '【重頭戲】餵食野生海豚', category: '景點', time: '18:00', notes: '日落後親手餵海豚', location: 'Tangalooma Jetty', transport:{icon:'directions_boat', time:'75m'} },
                     { id: 205, name: '搭船返回布里斯班', category: '交通', time: '20:00', notes: '約 21:00 抵達市區', location: 'Brisbane', transport:{icon:'bed', time:'--'} }
@@ -378,8 +378,8 @@ createApp({
                 date: 'Sat 13', 
                 weather: {icon:'wb_sunny', temp:27, feels_like:29, location:'可倫賓'}, 
                 activities: [
-                    { id: 501, name: '前往可倫賓動物園', category: '交通', time: '09:00', notes: '帶著行李去 (門口可寄存)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'} },
-                    { id: 502, name: '可倫賓野生動物園', category: '景點', time: '09:30', notes: '⚠️進園先預約抱無尾熊拍照', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'local_taxi', time:'10m'} },
+                    { id: 501, name: '前往可倫賓動物園(Currumbin Wildlife Sanctuary)', category: '交通', time: '09:00', notes: '帶著行李去 (門口可寄存)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'} },
+                    { id: 502, name: '可倫賓野生動物園(Currumbin Wildlife Sanctuary)', category: '景點', time: '09:30', notes: '⚠️進園先預約抱無尾熊拍照', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'local_taxi', time:'10m'} },
                     { id: 503, name: '前往機場 (OOL)', category: '交通', time: '12:45', notes: '離動物園僅10分鐘車程', location: 'Gold Coast Airport', transport:{icon:'flight_takeoff', time:'--'} },
                     { id: 504, name: '搭機返程', category: '航班', time: '14:50', notes: 'VA528', location: 'Gold Coast Airport', transport:{icon:'home', time:'--'} }
                 ]
@@ -408,8 +408,8 @@ createApp({
         // Modal: 住宿
         const isAccommodationModalOpen = ref(false);
         const accommodationInfo = reactive(load('accom_v5', {
-            brisbane: {city:'布里斯班 (Day 1-2)', name:'待填寫', address:''}, 
-            gc: {city:'黃金海岸 (Day 3-4)', name:'待填寫', address:''}
+            brisbane: {city:'Brisbane (Day 1-2)', name:'待填寫', address:''}, 
+            gc: {city:'Gold Coast (Day 3-4)', name:'待填寫', address:''}
         }));
         const openAccommodationModal = () => isAccommodationModalOpen.value = true;
         const saveAccommodation = () => { save('accom_v5', accommodationInfo); isAccommodationModalOpen.value = false; };
@@ -433,7 +433,7 @@ createApp({
         
         // 資訊頁資料
         const flightInfo = { 
-            depart: {time:'09:40 抵達 (OOL)', flight:'參考機票'}, 
+            depart: {time:'09:40 抵達 (OOL)', flight:'VA511'}, 
             return: {time:'14:50 起飛 (OOL)', flight:'VA528'} 
         };
 
