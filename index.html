@@ -7,26 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 字體設定 */
-        body { background-color: #004c8f; font-family: 'Poppins', sans-serif; }
-        #app { background-color: #f0f4f8; min-height: 100vh; }
+        /* 全局字體與背景設定 */
+        body { background-color: #0f172a; font-family: 'Poppins', sans-serif; } /* 深藍色背景防露白 */
+        #app { background-color: #f3f6f9; min-height: 100vh; font-family: 'Poppins', sans-serif; }
         
-        /* 澳洲藍和陽光黃 */
+        /* 澳洲主題色 */
         .color-primary { background-color: #004c8f; }
         .color-secondary { background-color: #ffcd00; }
 
-        /* 隱藏滾動條但保留功能 */
+        /* 隱藏滾動條 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* 避免 Vue 載入前看到亂碼 */
         [v-cloak] { display: none; }
         
-        /* 圖片載入動畫 */
-        .img-loading { background: #e2e8f0; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        /* 圖片載入微動畫 */
+        .img-loading { background: #e2e8f0; animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
     </style>
 </head>
@@ -37,63 +36,64 @@
     <header class="relative w-full bg-[#004c8f]">
         <img src="Gemini Generated.png" alt="澳洲風格橫幅" 
              class="w-full h-auto block object-contain"
-             style="min-height: 200px;"> <div class="absolute inset-0 bg-gradient-to-t from-[#004c8f] via-transparent to-transparent opacity-90"></div>
+             style="min-height: 220px;"> <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-90"></div>
 
         <div class="absolute bottom-8 left-6 right-6 z-10">
-             <div class="text-white drop-shadow-lg">
-                <div class="flex items-center space-x-2 mb-1 opacity-90">
-                    <span class="bg-yellow-400 text-[#004c8f] text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wider">TRIP PLANNER</span>
-                    <span class="text-xs font-medium tracking-widest uppercase">Queensland</span>
+             <div class="text-white drop-shadow-xl">
+                <div class="flex items-center space-x-2 mb-2 opacity-90">
+                    <span class="bg-[#ffcd00] text-[#004c8f] text-[10px] font-extrabold px-2 py-0.5 rounded-full tracking-wider shadow-sm">TRIP PLANNER</span>
+                    <span class="text-xs font-semibold tracking-widest uppercase text-gray-200">Queensland</span>
                 </div>
-                <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-white mb-1" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+                <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-white mb-1" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                     2025 Dec
                 </h1>
-                <h2 class="text-xl font-semibold text-blue-100 flex items-center">
-                    Brisbane & Gold Coast <span class="ml-2 text-yellow-300">☀️</span>
+                <h2 class="text-lg font-medium text-blue-100 flex items-center">
+                    Brisbane & Gold Coast <span class="ml-2">☀️</span>
                 </h2>
              </div>
         </div>
 
-        <button @click="openSyncModal" class="absolute top-4 right-4 bg-black/30 backdrop-blur-md text-white p-2 rounded-full shadow-lg hover:bg-black/50 transition z-50">
+        <button @click="openSyncModal" class="absolute top-4 right-4 bg-black/20 backdrop-blur-md text-white p-2.5 rounded-full shadow-lg border border-white/20 active:bg-black/40 transition z-50">
             <span class="material-icons text-xl">cloud_sync</span>
         </button>
     </header>
 
-    <div class="relative z-40 -mt-6 flex justify-end px-6 space-x-3 mb-2">
+    <div class="relative z-40 -mt-7 flex justify-end px-6 space-x-3 mb-1">
         <button v-for="tab in tabs" :key="tab.id" @click="currentTab = tab.id"
-                :class="{'bg-[#ffcd00] text-[#004c8f] scale-110 ring-4 ring-[#f0f4f8]': currentTab === tab.id, 'bg-white text-gray-400 shadow-md': currentTab !== tab.id}"
-                class="p-3 rounded-full transition duration-300 transform active:scale-95 flex items-center justify-center w-12 h-12">
+                :class="{'bg-[#ffcd00] text-[#004c8f] scale-110 ring-4 ring-[#f3f6f9] shadow-lg': currentTab === tab.id, 'bg-white text-gray-400 shadow-md': currentTab !== tab.id}"
+                class="p-3 rounded-full transition duration-300 transform active:scale-95 flex items-center justify-center w-12 h-12 border border-gray-100">
             <span class="material-icons text-xl">{{ tab.icon }}</span>
         </button>
     </div>
 
-    <main class="relative z-30 bg-[#f0f4f8] rounded-t-[30px] px-5 pt-4 min-h-[60vh] -mt-4">
+    <main class="relative z-30 bg-[#f3f6f9] rounded-t-[32px] px-5 pt-4 min-h-[60vh] -mt-5 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
         
         <section v-show="currentTab === 'schedule'" class="animate-fade-in pb-24">
-            <div class="flex items-center mb-4 mt-2">
-                <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+            <div class="flex items-center mb-5 mt-2 px-1">
+                <h2 class="text-2xl font-bold text-gray-800 flex items-center tracking-tight">
                     <span class="material-icons mr-2 text-blue-600">calendar_month</span>
                     每日行程
                 </h2>
             </div>
             
-            <div class="flex overflow-x-scroll no-scrollbar py-2 mb-6 space-x-3">
+            <div class="flex overflow-x-scroll no-scrollbar py-2 mb-6 space-x-3 px-1">
                 <button v-for="(day, index) in itinerary" :key="index" @click="currentDayIndex = index"
-                        :class="{'color-primary text-white shadow-lg scale-105 ring-2 ring-blue-300': currentDayIndex === index, 'bg-white text-gray-700 border border-gray-200': currentDayIndex !== index}"
-                        class="flex-shrink-0 w-[65px] h-[80px] flex flex-col items-center justify-center p-2 rounded-2xl transition duration-300 shadow-sm">
-                    <span class="text-xs opacity-80 font-medium">{{ day.date.substring(0, 3) }}</span>
-                    <span class="text-2xl font-bold">{{ day.date.substring(4) }}</span>
+                        :class="{'bg-[#004c8f] text-white shadow-lg shadow-blue-900/30 scale-105 ring-2 ring-blue-200': currentDayIndex === index, 'bg-white text-gray-600 border border-gray-200': currentDayIndex !== index}"
+                        class="flex-shrink-0 w-[68px] h-[84px] flex flex-col items-center justify-center p-2 rounded-2xl transition duration-300">
+                    <span class="text-[11px] opacity-80 font-medium tracking-wide uppercase">{{ day.date.substring(0, 3) }}</span>
+                    <span class="text-3xl font-bold mt-0.5">{{ day.date.substring(4) }}</span>
                 </button>
             </div>
             
             <div v-if="currentDay" class="space-y-6">
-                <div class="flex items-center p-5 bg-white rounded-2xl shadow-sm border-l-4 border-blue-500">
-                    <span class="material-icons text-4xl text-yellow-500 mr-4">{{ currentDay.weather.icon }}</span>
+                <div class="flex items-center p-5 bg-white rounded-2xl shadow-sm border border-blue-50 relative overflow-hidden">
+                    <div class="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-blue-50 to-transparent opacity-50"></div>
+                    <span class="material-icons text-4xl text-yellow-500 mr-4 drop-shadow-sm">{{ currentDay.weather.icon }}</span>
                     <div>
                         <div class="font-bold text-gray-800 text-lg">{{ currentDay.weather.location }}</div>
-                        <div class="text-gray-500 text-sm flex items-center">
+                        <div class="text-gray-500 text-sm flex items-center mt-0.5">
                             <span class="text-2xl font-bold text-gray-800 mr-2">{{ currentDay.weather.temp }}°</span> 
-                            (體感 {{ currentDay.weather.feels_like }}°)
+                            <span class="bg-gray-100 px-2 py-0.5 rounded text-xs">體感 {{ currentDay.weather.feels_like }}°</span>
                         </div>
                     </div>
                 </div>
@@ -101,8 +101,8 @@
                 <div class="space-y-4">
                     <div v-for="(activity, index) in currentDay.activities" :key="activity.id">
                         
-                        <div class="relative bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex h-[120px] transition transform hover:shadow-md"
-                             :class="{'border-l-4 border-l-yellow-400': activity.category === '航班'}"
+                        <div class="relative bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex h-[125px] transition transform active:scale-[0.98]"
+                             :class="{'border-l-[6px] border-l-[#ffcd00]': activity.category === '航班'}"
                              @click="editActivity(currentDayIndex, index)">
                             
                             <div class="w-[110px] h-full bg-gray-200 flex-shrink-0 relative">
@@ -112,90 +112,110 @@
                                 </div>
                             </div>
 
-                            <div class="flex-1 p-3 min-w-0 flex flex-col justify-between">
+                            <div class="flex-1 p-3.5 min-w-0 flex flex-col justify-between">
                                 <div>
-                                    <div class="flex justify-between items-start mb-1">
-                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded text-white tracking-wide"
+                                    <div class="flex justify-between items-start mb-1.5">
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded text-white tracking-wide shadow-sm"
                                               :class="{
-                                                'bg-yellow-500': activity.category === '航班',
+                                                'bg-[#ffcd00] text-black': activity.category === '航班',
                                                 'bg-green-500': activity.category === '住宿', 
                                                 'bg-blue-500': activity.category === '景點', 
-                                                'bg-red-400': activity.category === '美食',
-                                                'bg-purple-400': activity.category === '購物',
-                                                'bg-gray-400': activity.category === '交通'
+                                                'bg-rose-500': activity.category === '美食',
+                                                'bg-purple-500': activity.category === '購物',
+                                                'bg-slate-500': activity.category === '交通',
+                                                'bg-gray-400': activity.category === '其他'
                                               }">
                                             {{ activity.category }}
                                         </span>
                                         <span class="text-xs font-bold text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">{{ activity.time }}</span>
                                     </div>
-                                    <h4 class="font-bold text-gray-800 text-base leading-tight mb-1 truncate">{{ activity.name }}</h4>
+                                    <h4 class="font-bold text-gray-800 text-[15px] leading-snug mb-1 truncate">{{ activity.name }}</h4>
                                     <p class="text-xs text-gray-500 line-clamp-1">{{ activity.notes }}</p>
                                 </div>
                                 
                                 <div class="flex justify-end mt-1">
                                     <button @click.stop="openGoogleMaps(activity.location)" 
-                                            class="py-1 px-3 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold flex items-center justify-center active:bg-blue-100 transition">
+                                            class="py-1.5 px-3 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold flex items-center justify-center active:bg-blue-100 transition">
                                         <span class="material-icons text-[14px] mr-1">near_me</span> 導航
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div v-if="index < currentDay.activities.length - 1" class="flex items-center justify-center py-2">
-                            <div class="px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-500 text-xs font-bold flex items-center shadow-sm">
-                                <span class="material-icons text-xs mr-1">{{ activity.transport?.icon || 'directions_walk' }}</span>
+                        <div v-if="index < currentDay.activities.length - 1" class="flex items-center justify-center py-2 relative">
+                            <div class="h-full w-px bg-gray-200 absolute top-0 bottom-0 left-1/2 -z-10"></div>
+                            <div class="px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-500 text-[10px] font-bold flex items-center shadow-sm z-10">
+                                <span class="material-icons text-[12px] mr-1 text-gray-400">{{ activity.transport?.icon || 'directions_walk' }}</span>
                                 {{ activity.transport?.time || '15m' }}
                             </div>
                         </div>
                     </div>
                     
                     <div v-if="currentDay.activities.length === 0" class="text-center py-12 text-gray-400">
-                        <span class="material-icons text-5xl mb-2 opacity-30">event_note</span>
-                        <p>今天還沒有安排行程喔！</p>
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="material-icons text-3xl opacity-30">event_note</span>
+                        </div>
+                        <p class="text-sm">今天還沒有安排行程喔！</p>
                     </div>
                 </div>
             </div>
 
             <button @click="openNewActivityModal" 
-                    class="fixed bottom-8 right-6 w-14 h-14 color-secondary text-[#004c8f] rounded-full shadow-2xl z-50 flex items-center justify-center transform active:scale-90 transition hover:scale-105">
-                <span class="material-icons text-3xl">add</span>
+                    class="fixed bottom-8 right-6 w-14 h-14 bg-[#ffcd00] text-[#004c8f] rounded-full shadow-xl shadow-yellow-500/20 z-50 flex items-center justify-center transform active:scale-90 transition hover:scale-105 border-2 border-white">
+                <span class="material-icons text-3xl font-bold">add</span>
             </button>
         </section>
 
         <section v-show="currentTab === 'info'" class="space-y-6 animate-fade-in pb-24">
-             <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-2">旅程資訊</h2>
+             <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-2 px-1">旅程資訊</h2>
              
-             <div class="bg-white p-5 rounded-2xl shadow-sm border border-blue-100">
-                <h3 class="font-bold text-lg mb-3 flex items-center text-blue-800"><span class="material-icons mr-2">flight</span> 航班資訊</h3>
-                <div class="space-y-3">
-                    <div class="bg-blue-50 p-3 rounded-xl border border-blue-100">
-                        <p class="text-xs text-gray-500 mb-1 font-bold">去程</p>
+             <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100">
+                <h3 class="font-bold text-lg mb-4 flex items-center text-blue-800"><span class="material-icons mr-2">flight</span> 航班資訊</h3>
+                <div class="space-y-4">
+                    <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">去程</span>
+                            <span class="text-xs font-bold text-gray-400">12/09 (Tue)</span>
+                        </div>
                         <div class="flex justify-between items-center">
-                            <p class="font-bold text-gray-800">{{ flightInfo.depart.time }}</p>
-                            <p class="text-sm text-blue-600 bg-white px-2 py-1 rounded shadow-sm">{{ flightInfo.depart.flight }}</p>
+                            <div>
+                                <p class="font-bold text-gray-800 text-lg">{{ flightInfo.depart.time }}</p>
+                                <p class="text-xs text-gray-500">抵達 OOL</p>
+                            </div>
+                            <p class="text-sm font-bold text-blue-600 bg-white px-3 py-1.5 rounded-lg shadow-sm border border-blue-50">{{ flightInfo.depart.flight }}</p>
                         </div>
                     </div>
-                    <div class="bg-blue-50 p-3 rounded-xl border border-blue-100">
-                        <p class="text-xs text-gray-500 mb-1 font-bold">回程</p>
+                    <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">回程</span>
+                            <span class="text-xs font-bold text-gray-400">12/13 (Sat)</span>
+                        </div>
                         <div class="flex justify-between items-center">
-                            <p class="font-bold text-gray-800">{{ flightInfo.return.time }}</p>
-                            <p class="text-sm text-blue-600 bg-white px-2 py-1 rounded shadow-sm">{{ flightInfo.return.flight }}</p>
+                            <div>
+                                <p class="font-bold text-gray-800 text-lg">{{ flightInfo.return.time }}</p>
+                                <p class="text-xs text-gray-500">起飛 OOL</p>
+                            </div>
+                            <p class="text-sm font-bold text-blue-600 bg-white px-3 py-1.5 rounded-lg shadow-sm border border-blue-50">{{ flightInfo.return.flight }}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-green-100">
-                 <div class="flex justify-between items-center mb-3">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-green-100">
+                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold text-lg flex items-center text-green-800"><span class="material-icons mr-2">hotel</span> 住宿資訊</h3>
-                    <button @click="openAccommodationModal" class="text-green-600 text-xs font-bold bg-green-50 px-3 py-1 rounded-full">編輯</button>
+                    <button @click="openAccommodationModal" class="text-green-600 text-xs font-bold bg-green-50 px-3 py-1.5 rounded-full hover:bg-green-100 transition">編輯</button>
                  </div>
-                 <div v-for="(info, key) in accommodationInfo" :key="key" class="mb-4 pb-4 border-b last:border-0 last:pb-0 last:mb-0">
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{{ info.city }}</p>
-                    <p class="font-bold text-gray-800 text-lg">{{ info.name }}</p>
-                    <p class="text-sm text-gray-500 mt-1 flex items-start bg-gray-50 p-2 rounded">
-                        <span class="material-icons text-xs mr-1 mt-0.5">place</span> {{ info.address || '尚未輸入地址' }}
-                    </p>
+                 <div v-for="(info, key) in accommodationInfo" :key="key" class="mb-5 last:mb-0">
+                    <div class="flex items-center mb-1">
+                        <div class="w-1.5 h-1.5 rounded-full bg-green-400 mr-2"></div>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">{{ info.city }}</p>
+                    </div>
+                    <p class="font-bold text-gray-800 text-lg leading-tight mb-2">{{ info.name }}</p>
+                    <div class="flex items-start bg-gray-50 p-3 rounded-xl">
+                        <span class="material-icons text-sm mr-2 mt-0.5 text-gray-400">place</span> 
+                        <p class="text-xs text-gray-600 leading-relaxed">{{ info.address || '尚未輸入地址' }}</p>
+                    </div>
                  </div>
             </div>
 
@@ -207,11 +227,14 @@
                         <p class="text-3xl font-black text-red-600">000</p>
                     </div>
                 </div>
+                <a href="tel:000" class="bg-red-500 text-white p-3 rounded-full shadow-lg shadow-red-500/30 active:scale-95 transition">
+                    <span class="material-icons">call</span>
+                </a>
             </div>
         </section>
 
         <section v-show="currentTab === 'shopping'" class="animate-fade-in pb-24">
-             <h2 class="text-2xl font-bold mb-4 text-gray-800 mt-2">購物清單</h2>
+             <h2 class="text-2xl font-bold mb-4 text-gray-800 mt-2 px-1">購物清單</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div v-for="(item, index) in shoppingList" :key="index" class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 relative group">
                     <button @click="removeShoppingItem(index)" class="absolute -top-2 -right-2 bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center shadow-md z-10 hover:bg-red-600 transition"><span class="material-icons text-sm">close</span></button>
@@ -220,20 +243,21 @@
                     <p class="font-bold text-gray-800 text-center text-sm">{{ item.name }}</p>
                 </div>
             </div>
-            <button @click="openNewShoppingModal" class="fixed bottom-8 right-6 w-14 h-14 color-secondary text-[#004c8f] rounded-full shadow-2xl z-50 flex items-center justify-center transform active:scale-90 transition hover:scale-105"><span class="material-icons text-3xl">add</span></button>
+            <button @click="openNewShoppingModal" class="fixed bottom-8 right-6 w-14 h-14 bg-[#ffcd00] text-[#004c8f] rounded-full shadow-xl shadow-yellow-500/20 z-50 flex items-center justify-center transform active:scale-90 transition hover:scale-105 border-2 border-white"><span class="material-icons text-3xl font-bold">add</span></button>
         </section>
 
         <section v-show="currentTab === 'expense'" class="animate-fade-in pb-24">
-             <h2 class="text-2xl font-bold mb-4 text-gray-800 mt-2">花費記錄</h2>
-            <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 rounded-3xl shadow-lg mb-6 text-white relative overflow-hidden">
+             <h2 class="text-2xl font-bold mb-4 text-gray-800 mt-2 px-1">花費記錄</h2>
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 rounded-3xl shadow-lg shadow-blue-900/20 mb-6 text-white relative overflow-hidden">
                 <div class="absolute -right-10 -top-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
-                <p class="text-blue-100 text-sm mb-1 font-medium">總花費 (AUD)</p>
-                <p class="text-5xl font-bold tracking-tight">${{ totalExpenses.toFixed(2) }}</p>
+                <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-yellow-400 opacity-20 rounded-full blur-2xl"></div>
+                <p class="text-blue-100 text-sm mb-1 font-medium tracking-wide">總花費 (AUD)</p>
+                <p class="text-5xl font-bold tracking-tight text-white">${{ totalExpenses.toFixed(2) }}</p>
             </div>
             <div class="space-y-3">
                 <div v-for="(exp, index) in expenseList" :key="index" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mr-4 text-2xl shadow-sm">
+                        <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mr-4 text-2xl shadow-inner">
                             <span v-if="exp.category==='飲食'">🍔</span>
                             <span v-else-if="exp.category==='交通'">🚌</span>
                             <span v-else-if="exp.category==='購物'">🛍️</span>
@@ -242,38 +266,43 @@
                         </div>
                         <div>
                             <div class="font-bold text-gray-800">{{ exp.name }}</div>
-                            <div class="text-xs text-gray-400 mt-0.5">{{ exp.date }} · {{ exp.category }}</div>
+                            <div class="text-xs text-gray-400 mt-0.5 flex items-center">
+                                <span class="material-icons text-[10px] mr-1">calendar_today</span> {{ exp.date }} · {{ exp.category }}
+                            </div>
                         </div>
                     </div>
                     <div class="font-bold text-gray-800 text-lg">-${{ exp.amount }}</div>
                 </div>
             </div>
-            <button @click="openNewExpenseModal" class="fixed bottom-8 right-6 w-14 h-14 color-secondary text-[#004c8f] rounded-full shadow-2xl z-50 flex items-center justify-center transform active:scale-90 transition hover:scale-105"><span class="material-icons text-3xl">add</span></button>
+            <button @click="openNewExpenseModal" class="fixed bottom-8 right-6 w-14 h-14 bg-[#ffcd00] text-[#004c8f] rounded-full shadow-xl shadow-yellow-500/20 z-50 flex items-center justify-center transform active:scale-90 transition hover:scale-105 border-2 border-white"><span class="material-icons text-3xl font-bold">add</span></button>
         </section>
     </main>
 
     <div v-if="isSyncModalOpen" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl animate-slide-up">
-            <h3 class="text-xl font-bold mb-2 flex items-center text-gray-800"><span class="material-icons mr-2 text-blue-600">cloud_sync</span> 資料備份與還原</h3>
-            <p class="text-xs text-gray-500 mb-6 leading-relaxed">由於本網頁沒有後端伺服器，資料儲存在您的瀏覽器中。請使用下方代碼在手機與電腦間傳輸資料。</p>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold flex items-center text-gray-800"><span class="material-icons mr-2 text-blue-600">cloud_sync</span> 資料備份與還原</h3>
+                <button @click="isSyncModalOpen = false" class="text-gray-400 hover:text-gray-600"><span class="material-icons">close</span></button>
+            </div>
+            <p class="text-xs text-gray-500 mb-6 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-100">
+                ⚠️ 注意：本網頁沒有雲端伺服器，資料僅儲存在您的手機瀏覽器中。若要換裝置查看，請使用下方功能。
+            </p>
             
             <div class="bg-blue-50 p-4 rounded-xl mb-4 border border-blue-100">
                 <h4 class="font-bold text-blue-800 text-sm mb-2 flex items-center"><span class="material-icons text-sm mr-1">upload</span> 1. 產生備份碼 (從此裝置)</h4>
-                <button @click="generateExportCode" class="w-full py-2 bg-blue-600 text-white rounded-lg font-bold text-sm shadow hover:bg-blue-700 transition mb-2">顯示資料代碼</button>
+                <button @click="generateExportCode" class="w-full py-2.5 bg-blue-600 text-white rounded-lg font-bold text-sm shadow hover:bg-blue-700 transition mb-3">顯示並複製資料代碼</button>
                 
-                <div v-if="exportDataString" class="mt-2">
-                    <p class="text-xs text-gray-500 mb-1">請全選並複製下方代碼：</p>
-                    <textarea readonly class="w-full h-24 p-2 text-[10px] text-gray-600 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-300" @click="$event.target.select()">{{ exportDataString }}</textarea>
+                <div v-if="exportDataString" class="animate-fade-in">
+                    <p class="text-[10px] text-blue-600 mb-1 font-bold">👇 若自動複製失敗，請長按下方框框全選複製：</p>
+                    <textarea readonly class="w-full h-24 p-2 text-[10px] text-gray-600 border border-blue-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 break-all" @click="$event.target.select()">{{ exportDataString }}</textarea>
                 </div>
             </div>
 
-            <div class="bg-yellow-50 p-4 rounded-xl mb-6 border border-yellow-100">
+            <div class="bg-yellow-50 p-4 rounded-xl mb-2 border border-yellow-100">
                 <h4 class="font-bold text-yellow-800 text-sm mb-2 flex items-center"><span class="material-icons text-sm mr-1">download</span> 2. 還原資料 (至此裝置)</h4>
-                <textarea v-model="importDataString" placeholder="在此貼上備份代碼..." class="w-full p-3 text-xs border border-yellow-200 rounded-lg h-20 mb-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none"></textarea>
-                <button @click="importData" class="w-full py-2 bg-yellow-500 text-white rounded-lg font-bold text-sm shadow hover:bg-yellow-600 transition">確認還原</button>
+                <textarea v-model="importDataString" placeholder="在此貼上您複製的代碼..." class="w-full p-3 text-xs border border-yellow-200 rounded-lg h-20 mb-3 focus:ring-2 focus:ring-yellow-400 focus:outline-none bg-white"></textarea>
+                <button @click="importData" class="w-full py-2.5 bg-yellow-500 text-white rounded-lg font-bold text-sm shadow hover:bg-yellow-600 transition">確認還原</button>
             </div>
-
-            <button @click="isSyncModalOpen = false" class="w-full py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition">關閉視窗</button>
         </div>
     </div>
 
@@ -290,7 +319,7 @@
                 <input v-model="activityForm.name" placeholder="行程名稱" class="w-full p-4 bg-gray-50 rounded-xl border border-transparent focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
                 
                 <div class="flex space-x-3">
-                    <select v-model="activityForm.category" class="w-1/3 p-4 bg-gray-50 rounded-xl border-none outline-none"><option>景點</option><option>住宿</option><option>美食</option><option>購物</option><option>交通</option><option>航班</option></select>
+                    <select v-model="activityForm.category" class="w-1/3 p-4 bg-gray-50 rounded-xl border-none outline-none"><option>景點</option><option>住宿</option><option>美食</option><option>購物</option><option>交通</option><option>航班</option><option>其他</option></select>
                     <input v-model="activityForm.time" placeholder="時間 (09:00)" class="w-2/3 p-4 bg-gray-50 rounded-xl border-none outline-none">
                 </div>
                 
@@ -354,44 +383,81 @@ createApp({
         const currentTab = ref('schedule');
         const currentDayIndex = ref(0);
 
-        // --- ✈️ 行程資料 (v8) ---
+        // --- ✈️ 行程資料 (v10 - 詳細行程整合) ---
         const defaultItinerary = [
-            { date: 'Tue 9', weather: {icon:'wb_sunny', temp:25, feels_like:25, location:'Gold Coast→Brisbane'}, activities: [
-                { id: 101, name: '抵達黃金海岸機場 (OOL)', category: '航班', time: '09:40', notes: 'VA528。需預訂 Con-X-ion 或轉 777號巴士轉火車', location: 'Gold Coast Airport', transport:{icon:'directions_bus', time:'1h 30m'}, image: 'https://images.unsplash.com/photo-1597818967926-d249f05a1e28?q=80&w=400&auto=format&fit=crop' },
-                { id: 102, name: '布里斯班酒店 Check-in', category: '住宿', time: '12:30', notes: '寄放行李', location: 'Brisbane CBD', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop' },
-                { id: 103, name: '皇后街 (Queen St Mall)', category: '購物', time: '13:00', notes: '午餐 & 參觀市政廳鐘樓(需預約)', location: 'Queen Street Mall', transport:{icon:'directions_walk', time:'20m'}, image: 'https://images.unsplash.com/photo-1596545733568-da7181e3a12a?q=80&w=400&auto=format&fit=crop' },
-                { id: 104, name: '南岸公園 (South Bank)', category: '景點', time: '15:00', notes: 'Streets Beach 人造沙灘 & 地標拍照', location: 'South Bank Parklands', transport:{icon:'directions_boat', time:'20m'}, image: 'https://images.unsplash.com/photo-1555561338-958a74447333?q=80&w=400&auto=format&fit=crop' },
-                { id: 105, name: '晚餐：霍華德史密斯碼頭', category: '美食', time: '18:00', notes: '故事橋下看夜景', location: 'Howard Smith Wharves', transport:{icon:'local_taxi', time:'15m'}, image: 'https://images.unsplash.com/photo-1588661706649-65d1d6cb2e36?q=80&w=400&auto=format&fit=crop' }
-            ]},
-            { date: 'Wed 10', weather: {icon:'wb_sunny', temp:24, feels_like:26, location:'Brisbane'}, activities: [
-                { id: 201, name: '前往 Holt Street Wharf', category: '交通', time: '08:30', notes: '從酒店出發', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
-                { id: 202, name: '搭船前往摩頓島(Moreton Island)', category: '交通', time: '10:00', notes: 'Tangalooma Resort', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'全日'}, image: 'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?q=80&w=400&auto=format&fit=crop' },
-                { id: 203, name: '島上活動 (滑沙/透明獨木舟)', category: '景點', time: '11:15 - 18:00', notes: '自由活動', location: 'Tangalooma Island Resort', transport:{icon:'waves', time:'--'}, image: 'https://images.unsplash.com/photo-1555985289-4b6248b1ba38?q=80&w=400&auto=format&fit=crop' },
-                { id: 204, name: '【重頭戲】餵食野生海豚', category: '景點', time: '18:00', notes: '日落後親手餵海豚', location: 'Tangalooma Jetty', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400&auto=format&fit=crop' },
-                { id: 205, name: '搭船返回布里斯班', category: '交通', time: '20:00', notes: '約 21:00 抵達市區', location: 'Brisbane', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1616053331454-e631988d447f?q=80&w=400&auto=format&fit=crop' }
-            ]},
-            { date: 'Thu 11', weather: {icon:'wb_cloudy', temp:26, feels_like:28, location:'Brisbane→Gold Coast'}, activities: [
-                { id: 301, name: 'James Street 文青早晨', category: '美食', time: '09:00', notes: 'Hellenika 早午餐 & 逛設計師小店', location: 'James Street, Fortitude Valley', transport:{icon:'train', time:'1h'}, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400&auto=format&fit=crop' },
-                { id: 302, name: '火車移動 (布里斯班→黃金海岸)', category: '交通', time: '12:00', notes: 'Central -> Helensvale -> 轉 TX7 巴士', location: 'Helensvale Station', transport:{icon:'directions_bus', time:'15m'}, image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=400&auto=format&fit=crop' },
-                { id: 303, name: '華納兄弟電影世界(Warner Bros. Movie World)', category: '景點', time: '13:15', notes: '⚠️寄放行李。必看：13:50 飛車特技、15:30 遊行', location: 'Warner Bros. Movie World', transport:{icon:'train', time:'30m'}, image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=400&auto=format&fit=crop' },
-                { id: 304, name: '入住黃金海岸酒店', category: '住宿', time: '17:00', notes: '搭 G:link 前往衝浪者天堂', location: 'Surfers Paradise', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1585863920703-e83df0239247?q=80&w=400&auto=format&fit=crop' }
-            ]},
-            { date: 'Fri 12', weather: {icon:'thunderstorm', temp:26, feels_like:28, location:'Gold Coast'}, activities: [
-                { id: 401, name: '睡到自然醒', category: '其他', time: '上午', notes: '享受度假時光', location: '', transport:{icon:'visibility', time:'--'}, image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=400&auto=format&fit=crop' },
-                { id: 402, name: 'Q1 SkyPoint 觀景台', category: '景點', time: '11:00', notes: '77層樓俯瞰海岸線', location: 'SkyPoint Observation Deck', transport:{icon:'directions_bus', time:'20m'}, image: 'https://images.unsplash.com/photo-1569421051563-149b56f87426?q=80&w=400&auto=format&fit=crop' },
-                { id: 403, name: '伯利角 (Burleigh Heads)', category: '景點', time: '14:00', notes: '沿海步道走至 Tumgun Lookout，風景最美', location: 'Burleigh Heads', transport:{icon:'directions_walk', time:'5m'}, image: 'https://images.unsplash.com/photo-1495572093510-47e06cc8571a?q=80&w=400&auto=format&fit=crop' },
-                { id: 404, name: '晚餐：Rick Shores', category: '美食', time: '17:30', notes: '必點：Moreton Bay Bug Roll', location: 'Rick Shores', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=400&auto=format&fit=crop' }
-            ]},
-            { date: 'Sat 13', weather: {icon:'thunderstorm', temp:27, feels_like:29, location:'Gold Coast'}, activities: [
-                { id: 501, name: '前往可倫賓動物園(Currumbin)', category: '交通', time: '09:00', notes: '帶著行李去 (門口可寄存)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1533514114760-4389f572ae26?q=80&w=400&auto=format&fit=crop' },
-                { id: 502, name: '可倫賓野生動物園', category: '景點', time: '09:30', notes: '⚠️進園先預約抱無尾熊拍照', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'local_taxi', time:'10m'}, image: 'https://images.unsplash.com/photo-1528028751512-42173f4d5463?q=80&w=400&auto=format&fit=crop' },
-                { id: 503, name: '前往機場 (OOL)', category: '交通', time: '12:45', notes: '離動物園僅10分鐘車程', location: 'Gold Coast Airport', transport:{icon:'flight_takeoff', time:'--'}, image: 'https://images.unsplash.com/photo-1544253101-70da5625d30e?q=80&w=400&auto=format&fit=crop' },
-                { id: 504, name: '搭機返程', category: '航班', time: '14:50', notes: 'VA528', location: 'Gold Coast Airport', transport:{icon:'home', time:'--'}, image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=400&auto=format&fit=crop' }
-            ]}
+            // Day 1
+            { 
+                date: 'Tue 9', 
+                weather: {icon:'wb_sunny', temp:25, feels_like:27, location:'Gold Coast→Brisbane'}, 
+                activities: [
+                    { id: 101, name: '抵達黃金海岸機場 (OOL)', category: '航班', time: '09:40', notes: '領取行李，準備移動', location: 'Gold Coast Airport', transport:{icon:'directions_bus', time:'1.5-2h'}, image: 'https://images.unsplash.com/photo-1597818967926-d249f05a1e28?q=80&w=400&auto=format&fit=crop' },
+                    { id: 102, name: '前往布里斯班酒店', category: '交通', time: '10:30', notes: '車程約 1.5 - 2 小時', location: 'Brisbane', transport:{icon:'directions_car', time:'--'}, image: 'https://images.unsplash.com/photo-1555985289-4b6248b1ba38?q=80&w=400&auto=format&fit=crop' },
+                    { id: 103, name: 'Ivy and Eve Apartments', category: '住宿', time: '12:15', notes: '寄放行李 (Check-in 14:00)', location: '22/28 Merivale St, South Brisbane', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop' },
+                    { id: 104, name: 'O Bagel (CBD)', category: '美食', time: '12:30', notes: '午餐推薦：Bulgogi Bagel (人均 $15-20)', location: 'O Bagel Brisbane', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?q=80&w=400&auto=format&fit=crop' },
+                    { id: 105, name: '市政廳 & 鐘樓 (City Hall)', category: '景點', time: '14:00', notes: '鐘樓導覽免費 (需預約)', location: 'Brisbane City Hall', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400&auto=format&fit=crop' },
+                    { id: 106, name: '皇后步行街 (Queen St)', category: '購物', time: '15:30', notes: '逛街 & Uptown', location: 'Queen Street Mall', transport:{icon:'directions_walk', time:'30m'}, image: 'https://images.unsplash.com/photo-1596545733568-da7181e3a12a?q=80&w=400&auto=format&fit=crop' },
+                    { id: 107, name: '故事橋 & 袋鼠角日落', category: '景點', time: '17:00', notes: 'Kangaroo Point Cliffs 看日落', location: 'Kangaroo Point Cliffs Park', transport:{icon:'directions_walk', time:'--'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
+                    { id: 108, name: '晚餐 (建議：Fish Lane)', category: '美食', time: '19:00', notes: '或南岸區域', location: 'Fish Lane', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1588661706649-65d1d6cb2e36?q=80&w=400&auto=format&fit=crop' },
+                    { id: 109, name: '南岸公園 & 摩天輪', category: '景點', time: '20:30', notes: '夜景。摩天輪營業至22:00 ($21)', location: 'The Wheel of Brisbane', transport:{icon:'directions_walk', time:'10m'}, image: 'https://images.unsplash.com/photo-1555561338-958a74447333?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 2
+            { 
+                date: 'Wed 10', 
+                weather: {icon:'wb_cloudy', temp:24, feels_like:26, location:'摩頓島 (Moreton)'}, 
+                activities: [
+                    { id: 201, name: '前往 Holt Street Wharf', category: '交通', time: '08:45', notes: '位於 Pinkenba，務必準時', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1544253101-70da5625d30e?q=80&w=400&auto=format&fit=crop' },
+                    { id: 202, name: '渡輪前往摩頓島', category: '交通', time: '10:00', notes: '航程約 75 分鐘', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'--'}, image: 'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?q=80&w=400&auto=format&fit=crop' },
+                    { id: 203, name: '滑沙之旅 (Desert Safari)', category: '景點', time: '13:30', notes: '時速40km衝下沙丘。其他時間自由活動', location: 'Moreton Island Desert', transport:{icon:'waves', time:'--'}, image: 'https://images.unsplash.com/photo-1555985289-4b6248b1ba38?q=80&w=400&auto=format&fit=crop' },
+                    { id: 204, name: '餵食野生海豚', category: '景點', time: '18:00', notes: '重頭戲！會濕身，聽從指示', location: 'Tangalooma Jetty', transport:{icon:'directions_boat', time:'--'}, image: 'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400&auto=format&fit=crop' },
+                    { id: 205, name: '返回布里斯班', category: '交通', time: '19:00', notes: '晚餐建議船上輕食。約 20:15 抵達碼頭', location: 'Holt Street Wharf', transport:{icon:'directions_car', time:'--'}, image: 'https://images.unsplash.com/photo-1616053331454-e631988d447f?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 3
+            { 
+                date: 'Thu 11', 
+                weather: {icon:'wb_sunny', temp:26, feels_like:28, location:'Brisbane→GC'}, 
+                activities: [
+                    { id: 301, name: 'Coffee Anthology', category: '美食', time: '08:30', notes: '必去咖啡店 (Margaret St)', location: 'Coffee Anthology', transport:{icon:'directions_walk', time:'10m'}, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop' },
+                    { id: 302, name: '羅馬街公園 (Roma St)', category: '景點', time: '09:30', notes: '亞熱帶花園 Spectacle Garden', location: 'Roma Street Parkland', transport:{icon:'directions_walk', time:'20m'}, image: 'https://images.unsplash.com/photo-1585863920703-e83df0239247?q=80&w=400&auto=format&fit=crop' },
+                    { id: 303, name: 'James St & 仙女巷', category: '購物', time: '11:00', notes: '布里斯班最時尚街區。午餐建議在此', location: 'James Street, Fortitude Valley', transport:{icon:'train', time:'1h'}, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400&auto=format&fit=crop' },
+                    { id: 304, name: '移動前往黃金海岸', category: '交通', time: '13:30', notes: '回酒店領行李 -> South Brisbane 搭火車 -> 轉 G:link', location: 'Surfers Paradise', transport:{icon:'hotel', time:'--'}, image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=400&auto=format&fit=crop' },
+                    { id: 305, name: 'The Island Gold Coast', category: '住宿', time: '15:00', notes: '辦理入住', location: '3128 Surfers Paradise Blvd', transport:{icon:'train', time:'--'}, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop' },
+                    { id: 306, name: 'Shiro Gelato and Snack', category: '美食', time: '15:30', notes: '(可選) Southport站。推薦大福、麻糬冰', location: 'Shiro Gelato and Snack', transport:{icon:'directions_walk', time:'--'}, image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=400&auto=format&fit=crop' },
+                    { id: 307, name: 'SkyPoint 觀景台 (Q1)', category: '景點', time: '17:00', notes: '77層樓看日落夜景', location: 'SkyPoint Observation Deck', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1569421051563-149b56f87426?q=80&w=400&auto=format&fit=crop' },
+                    { id: 308, name: '晚餐：The Tropic (待定)', category: '美食', time: '19:30', notes: '視情況，否則在酒店附近吃', location: 'The Tropic', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 4
+            { 
+                date: 'Fri 12', 
+                weather: {icon:'wb_sunny', temp:28, feels_like:30, location:'Gold Coast'}, 
+                activities: [
+                    { id: 401, name: '衝浪者天堂 (Surfers Paradise)', category: '景點', time: '10:00', notes: '沙灘漫步、地標拱門拍照', location: 'Surfers Paradise Sign', transport:{icon:'directions_bus', time:'20m'}, image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=400&auto=format&fit=crop' },
+                    { id: 402, name: 'Charis Seafood', category: '美食', time: '12:45', notes: '前往 Labrador。必吃：炸魚薯條', location: 'Charis Seafoods', transport:{icon:'visibility', time:'--'}, image: 'https://images.unsplash.com/photo-1534940562479-7977eb772a0d?q=80&w=400&auto=format&fit=crop' },
+                    { id: 403, name: '鵜鶘餵食秀 (Pelican)', category: '必看', time: '13:30', notes: '13:30 準時開始，免費', location: 'Charis Seafoods', transport:{icon:'shopping_bag', time:'--'}, image: 'https://images.unsplash.com/photo-1588698007629-9b7e77b63293?q=80&w=400&auto=format&fit=crop' },
+                    { id: 404, name: 'Pacific Fair 購物中心', category: '購物', time: '14:30', notes: '黃金海岸最大商場', location: 'Pacific Fair Shopping Centre', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=400&auto=format&fit=crop' },
+                    { id: 405, name: '晚餐：Rick Shores', category: '美食', time: '19:00', notes: 'Waiting list 中', location: 'Rick Shores', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1606213593003-2479e3770d1e?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 5
+            { 
+                date: 'Sat 13', 
+                weather: {icon:'wb_sunny', temp:27, feels_like:29, location:'GC→Sydney'}, 
+                activities: [
+                    { id: 501, name: '前往庫倫賓', category: '交通', time: '08:20', notes: '攜帶行李前往 (門口可寄存 $3-8)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
+                    { id: 502, name: '庫倫賓野生動物園', category: '景點', time: '09:00', notes: '門票約 $65', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'camera_alt', time:'--'}, image: 'https://images.unsplash.com/photo-1533514114760-4389f572ae26?q=80&w=400&auto=format&fit=crop' },
+                    { id: 503, name: '抱無尾熊拍照 (Koala)', category: '必做', time: '09:15', notes: '入園第一件事先去預約！', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1528028751512-42173f4d5463?q=80&w=400&auto=format&fit=crop' },
+                    { id: 504, name: '餵袋鼠 & 遊園小火車', category: '體驗', time: '10:00', notes: '飼料需另購', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1596716075908-1f440d9908c6?q=80&w=400&auto=format&fit=crop' },
+                    { id: 505, name: '午餐 (園區內)', category: '美食', time: '11:30', notes: '簡單解決', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'directions_bus', time:'15m'}, image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=400&auto=format&fit=crop' },
+                    { id: 506, name: '前往黃金海岸機場 (OOL)', category: '交通', time: '13:10', notes: '取回行李，務必準時離開', location: 'Gold Coast Airport', transport:{icon:'flight_takeoff', time:'--'}, image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=400&auto=format&fit=crop' },
+                    { id: 507, name: '飛機返程', category: '航班', time: '14:50', notes: '返回悉尼', location: 'Gold Coast Airport', transport:{icon:'home', time:'--'}, image: 'https://images.unsplash.com/photo-1542296332-2e44a99cfef9?q=80&w=400&auto=format&fit=crop' }
+                ]
+            }
         ];
 
-        // 綁定資料
-        const itinerary = reactive(load('itinerary_v8', defaultItinerary));
+        // 綁定資料 (v10)
+        const itinerary = reactive(load('itinerary_v10', defaultItinerary));
         const currentDay = computed(() => itinerary[currentDayIndex.value]);
         const openGoogleMaps = (loc) => loc ? window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`) : alert('請先設定地點');
 
@@ -405,57 +471,58 @@ createApp({
         const saveActivity = () => {
             if (editingActivityIndex.value === null) itinerary[currentDayIndex.value].activities.push({...activityForm, id: Date.now()});
             else Object.assign(itinerary[currentDayIndex.value].activities[editingActivityIndex.value], activityForm);
-            save('itinerary_v8', itinerary); isActivityModalOpen.value = false;
+            save('itinerary_v10', itinerary); isActivityModalOpen.value = false;
         };
-        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v8', itinerary); isActivityModalOpen.value = false; };
+        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v10', itinerary); isActivityModalOpen.value = false; };
 
-        // 住宿
+        // 住宿 (v10 更新地址)
         const isAccommodationModalOpen = ref(false);
-        const accommodationInfo = reactive(load('accom_v8', { brisbane: {city:'Brisbane (Day 1-2)', name:'待填寫', address:''}, gc: {city:'Gold Coast (Day 3-4)', name:'待填寫', address:''} }));
+        const accommodationInfo = reactive(load('accom_v10', { 
+            brisbane: {city:'Brisbane', name:'Ivy and Eve Apartments', address:'22/28 Merivale St, South Brisbane'}, 
+            gc: {city:'Gold Coast', name:'The Island Gold Coast', address:'3128 Surfers Paradise Blvd'} 
+        }));
         const openAccommodationModal = () => isAccommodationModalOpen.value = true;
-        const saveAccommodation = () => { save('accom_v8', accommodationInfo); isAccommodationModalOpen.value = false; };
+        const saveAccommodation = () => { save('accom_v10', accommodationInfo); isAccommodationModalOpen.value = false; };
 
         // 購物
         const isShoppingModalOpen = ref(false);
-        const shoppingList = reactive(load('shop_v8', []));
+        const shoppingList = reactive(load('shop_v10', []));
         const shoppingForm = reactive({ name:'', image: null });
         const openNewShoppingModal = () => { shoppingForm.name=''; shoppingForm.image=null; isShoppingModalOpen.value = true; };
         const handleImageUpload = (e) => { const r = new FileReader(); r.onload=x=>shoppingForm.image=x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
-        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v8', shoppingList); isShoppingModalOpen.value = false; };
-        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v8', shoppingList); };
+        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v10', shoppingList); isShoppingModalOpen.value = false; };
+        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v10', shoppingList); };
 
         // 花費
         const isExpenseModalOpen = ref(false);
-        const expenseList = reactive(load('exp_v8', []));
+        const expenseList = reactive(load('exp_v10', []));
         const expenseForm = reactive({ category:'飲食', name:'', amount:0, date: new Date().toISOString().split('T')[0] });
         const openNewExpenseModal = () => { expenseForm.name=''; expenseForm.amount=''; isExpenseModalOpen.value = true; };
-        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v8', expenseList); isExpenseModalOpen.value = false; };
+        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v10', expenseList); isExpenseModalOpen.value = false; };
         const totalExpenses = computed(() => expenseList.reduce((sum, i) => sum + Number(i.amount||0), 0));
         
         // 航班
-        const flightInfo = { depart: {time:'09:40 抵達 (OOL)', flight:'VA511'}, return: {time:'14:50 起飛 (OOL)', flight:'VA528'} };
+        const flightInfo = { depart: {time:'09:40', flight:'VA528'}, return: {time:'14:50', flight:'VA528'} };
 
-        // --- ☁️ 資料同步功能 (V9 改良版) ---
+        // --- ☁️ 資料同步功能 (V10: 手機友善版) ---
         const isSyncModalOpen = ref(false);
         const importDataString = ref('');
-        const exportDataString = ref(''); // 新增變數來儲存匯出的字串
+        const exportDataString = ref('');
 
         const openSyncModal = () => {
             isSyncModalOpen.value = true;
-            exportDataString.value = ''; // 每次打開重置
+            exportDataString.value = '';
             importDataString.value = '';
         };
 
         const generateExportCode = () => {
-            const allData = {
-                itinerary: itinerary,
-                accommodation: accommodationInfo,
-                shopping: shoppingList,
-                expenses: expenseList
-            };
+            const allData = { itinerary, accommodation: accommodationInfo, shopping: shoppingList, expenses: expenseList };
             exportDataString.value = JSON.stringify(allData);
-            // 嘗試自動複製，但如果失敗，用戶還有 Textarea 可以手動複製
-            navigator.clipboard.writeText(exportDataString.value).then(() => alert('代碼已複製！若失敗請手動複製下方文字框。')).catch(() => {});
+            
+            // 嘗試自動複製，失敗也不報錯，因為有 Textarea 顯示
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(exportDataString.value).then(() => alert('已複製代碼！')).catch(() => {});
+            }
         };
 
         const importData = () => {
@@ -467,10 +534,10 @@ createApp({
                     shoppingList.splice(0, shoppingList.length, ...data.shopping);
                     expenseList.splice(0, expenseList.length, ...data.expenses);
                     
-                    save('itinerary_v8', itinerary);
-                    save('accom_v8', accommodationInfo);
-                    save('shop_v8', shoppingList);
-                    save('exp_v8', expenseList);
+                    save('itinerary_v10', itinerary);
+                    save('accom_v10', accommodationInfo);
+                    save('shop_v10', shoppingList);
+                    save('exp_v10', expenseList);
                     
                     alert('資料還原成功！');
                     isSyncModalOpen.value = false;
@@ -490,7 +557,6 @@ createApp({
             isShoppingModalOpen, shoppingForm, openNewShoppingModal, handleImageUpload, addShoppingItem, removeShoppingItem,
             isExpenseModalOpen, expenseForm, openNewExpenseModal, addExpense,
             openGoogleMaps,
-            // Sync V9
             isSyncModalOpen, openSyncModal, generateExportCode, importData, importDataString, exportDataString
         };
     }
