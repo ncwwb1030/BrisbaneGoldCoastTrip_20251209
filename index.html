@@ -364,4 +364,206 @@
             <h3 class="text-xl font-bold mb-4">新增花費</h3>
             <div class="space-y-3">
                 <select v-model="expenseForm.category" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-200"><option>飲食</option><option>交通</option><option>購物</option><option>住宿</option><option>其他</option></select>
-                <input v-model="expenseForm.name" placeholder="項目名稱" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:
+                <input v-model="expenseForm.name" placeholder="項目名稱" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-200">
+                <input v-model="expenseForm.amount" type="number" placeholder="金額 (AUD)" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-200">
+                <input v-model="expenseForm.date" type="date" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-200">
+            </div>
+            <div class="flex gap-3 mt-6"><button @click="isExpenseModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="addExpense" class="flex-1 py-3 color-primary text-white rounded-xl font-bold shadow-lg">新增</button></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const { createApp, ref, reactive, computed } = Vue;
+
+createApp({
+    setup() {
+        const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch(e) { return d; }};
+        const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+        const tabs = [{ id: 'schedule', icon: 'calendar_today' }, { id: 'info', icon: 'airplane_ticket' }, { id: 'shopping', icon: 'shopping_bag' }, { id: 'expense', icon: 'receipt_long' }];
+        const currentTab = ref('schedule');
+        const currentDayIndex = ref(0);
+
+        // --- ✈️ 行程資料 (V11: 100% 同步 Word 檔 + 修復圖示) ---
+        const defaultItinerary = [
+            // Day 1: 12/09 (Tue)
+            { 
+                date: 'Tue 9', 
+                weather: {icon:'wb_sunny', temp:25, feels_like:27, location:'Gold Coast→Brisbane'}, 
+                activities: [
+                    { id: 101, name: '抵達黃金海岸機場 (OOL)', category: '航班', time: '09:40', notes: '領取行李，準備移動', location: 'Gold Coast Airport', transport:{icon:'directions_bus', time:'1.5-2h'}, image: 'https://images.unsplash.com/photo-1597818967926-d249f05a1e28?q=80&w=400&auto=format&fit=crop' },
+                    { id: 102, name: '前往布里斯班酒店', category: '交通', time: '10:30', notes: '車程約 1.5 - 2 小時', location: 'Brisbane', transport:{icon:'directions_car', time:'--'}, image: 'https://images.unsplash.com/photo-1555985289-4b6248b1ba38?q=80&w=400&auto=format&fit=crop' },
+                    { id: 103, name: 'Ivy and Eve Apartments', category: '住宿', time: '12:15', notes: '寄放行李 (Check-in 14:00)', location: '22/28 Merivale St, South Brisbane', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop' },
+                    { id: 104, name: 'O Bagel (CBD)', category: '美食', time: '12:30', notes: '午餐推薦：Bulgogi Bagel (人均 $15-20)', location: 'O Bagel Brisbane', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?q=80&w=400&auto=format&fit=crop' },
+                    { id: 105, name: '市政廳 & 鐘樓 (City Hall)', category: '景點', time: '14:00', notes: '鐘樓導覽免費 (需預約)', location: 'Brisbane City Hall', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400&auto=format&fit=crop' },
+                    { id: 106, name: '皇后步行街 (Queen St)', category: '購物', time: '15:30', notes: '逛街 & Uptown', location: 'Queen Street Mall', transport:{icon:'directions_walk', time:'30m'}, image: 'https://images.unsplash.com/photo-1596545733568-da7181e3a12a?q=80&w=400&auto=format&fit=crop' },
+                    { id: 107, name: '故事橋 & 袋鼠角日落', category: '景點', time: '17:00', notes: 'Kangaroo Point Cliffs 看日落', location: 'Kangaroo Point Cliffs Park', transport:{icon:'directions_walk', time:'--'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
+                    { id: 108, name: '晚餐 (建議：Fish Lane)', category: '美食', time: '19:00', notes: '或南岸區域', location: 'Fish Lane', transport:{icon:'directions_walk', time:'15m'}, image: 'https://images.unsplash.com/photo-1588661706649-65d1d6cb2e36?q=80&w=400&auto=format&fit=crop' },
+                    { id: 109, name: '南岸公園 & 摩天輪', category: '景點', time: '20:30', notes: '夜景。摩天輪營業至22:00 ($21)', location: 'The Wheel of Brisbane', transport:{icon:'directions_walk', time:'10m'}, image: 'https://images.unsplash.com/photo-1555561338-958a74447333?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 2: 12/10 (Wed)
+            { 
+                date: 'Wed 10', 
+                weather: {icon:'wb_cloudy', temp:24, feels_like:26, location:'摩頓島 (Moreton)'}, 
+                activities: [
+                    { id: 201, name: '前往 Holt Street Wharf', category: '交通', time: '08:45', notes: '位於 Pinkenba，務必準時', location: 'Holt Street Wharf', transport:{icon:'directions_boat', time:'75m'}, image: 'https://images.unsplash.com/photo-1544253101-70da5625d30e?q=80&w=400&auto=format&fit=crop' },
+                    { id: 202, name: '渡輪前往摩頓島', category: '交通', time: '10:00', notes: '航程約 75 分鐘', location: 'Tangalooma Island Resort', transport:{icon:'pool', time:'--'}, image: 'https://images.unsplash.com/photo-1510097467424-192d713fd8b2?q=80&w=400&auto=format&fit=crop' },
+                    { id: 203, name: '滑沙之旅 (Desert Safari)', category: '景點', time: '13:30', notes: '時速40km衝下沙丘。其他時間自由活動', location: 'Moreton Island Desert', transport:{icon:'waves', time:'--'}, image: 'https://images.unsplash.com/photo-1555985289-4b6248b1ba38?q=80&w=400&auto=format&fit=crop' },
+                    { id: 204, name: '餵食野生海豚', category: '體驗', time: '18:00', notes: '重頭戲！會濕身，聽從指示', location: 'Tangalooma Jetty', transport:{icon:'directions_boat', time:'--'}, image: 'https://images.unsplash.com/photo-1570481662006-a3a1374699e8?q=80&w=400&auto=format&fit=crop' },
+                    { id: 205, name: '返回布里斯班', category: '交通', time: '19:00', notes: '晚餐建議船上輕食。約 20:15 抵達碼頭', location: 'Holt Street Wharf', transport:{icon:'directions_car', time:'--'}, image: 'https://images.unsplash.com/photo-1616053331454-e631988d447f?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 3: 12/11 (Thu)
+            { 
+                date: 'Thu 11', 
+                weather: {icon:'wb_sunny', temp:26, feels_like:28, location:'Brisbane→GC'}, 
+                activities: [
+                    { id: 301, name: 'Coffee Anthology', category: '美食', time: '08:30', notes: '必去咖啡店 (Margaret St)', location: 'Coffee Anthology', transport:{icon:'directions_walk', time:'10m'}, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop' },
+                    { id: 302, name: '羅馬街公園 (Roma St)', category: '景點', time: '09:30', notes: '亞熱帶花園 Spectacle Garden', location: 'Roma Street Parkland', transport:{icon:'directions_walk', time:'20m'}, image: 'https://images.unsplash.com/photo-1585863920703-e83df0239247?q=80&w=400&auto=format&fit=crop' },
+                    { id: 303, name: 'James St & 仙女巷', category: '購物', time: '11:00', notes: '布里斯班最時尚街區。午餐建議在此', location: 'James Street, Fortitude Valley', transport:{icon:'train', time:'1h'}, image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=400&auto=format&fit=crop' },
+                    { id: 304, name: '移動前往黃金海岸', category: '交通', time: '13:30', notes: '回酒店領行李 -> South Brisbane 搭火車 -> 轉 G:link', location: 'Surfers Paradise', transport:{icon:'hotel', time:'--'}, image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=400&auto=format&fit=crop' },
+                    { id: 305, name: 'The Island Gold Coast', category: '住宿', time: '15:00', notes: '辦理入住', location: '3128 Surfers Paradise Blvd', transport:{icon:'train', time:'--'}, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=400&auto=format&fit=crop' },
+                    { id: 306, name: 'Shiro Gelato and Snack', category: '美食', time: '15:30', notes: '(可選) Southport站。推薦大福、麻糬冰', location: 'Shiro Gelato and Snack', transport:{icon:'directions_walk', time:'--'}, image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=400&auto=format&fit=crop' },
+                    { id: 307, name: 'SkyPoint 觀景台 (Q1)', category: '景點', time: '17:00', notes: '77層樓看日落夜景', location: 'SkyPoint Observation Deck', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1569421051563-149b56f87426?q=80&w=400&auto=format&fit=crop' },
+                    { id: 308, name: '晚餐：The Tropic (待定)', category: '美食', time: '19:30', notes: '視情況，否則在酒店附近吃', location: 'The Tropic', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 4: 12/12 (Fri)
+            { 
+                date: 'Fri 12', 
+                weather: {icon:'thunderstorm', temp:28, feels_like:30, location:'Gold Coast'}, // 修正圖示代碼
+                activities: [
+                    { id: 401, name: '衝浪者天堂 (Surfers Paradise)', category: '景點', time: '10:00', notes: '沙灘漫步、地標拱門拍照', location: 'Surfers Paradise Sign', transport:{icon:'directions_bus', time:'20m'}, image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=400&auto=format&fit=crop' },
+                    { id: 402, name: 'Charis Seafood', category: '美食', time: '12:45', notes: '前往 Labrador。必吃：炸魚薯條', location: 'Charis Seafoods', transport:{icon:'visibility', time:'--'}, image: 'https://images.unsplash.com/photo-1534940562479-7977eb772a0d?q=80&w=400&auto=format&fit=crop' },
+                    { id: 403, name: '鵜鶘餵食秀 (Pelican)', category: '必看', time: '13:30', notes: '13:30 準時開始，免費', location: 'Charis Seafoods', transport:{icon:'shopping_bag', time:'--'}, image: 'https://images.unsplash.com/photo-1588698007629-9b7e77b63293?q=80&w=400&auto=format&fit=crop' },
+                    { id: 404, name: 'Pacific Fair 購物中心', category: '購物', time: '14:30', notes: '黃金海岸最大商場', location: 'Pacific Fair Shopping Centre', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=400&auto=format&fit=crop' },
+                    { id: 405, name: '晚餐：Rick Shores', category: '美食', time: '19:00', notes: 'Waiting list 中', location: 'Rick Shores', transport:{icon:'bed', time:'--'}, image: 'https://images.unsplash.com/photo-1606213593003-2479e3770d1e?q=80&w=400&auto=format&fit=crop' }
+                ]
+            },
+            // Day 5: 12/13 (Sat)
+            { 
+                date: 'Sat 13', 
+                weather: {icon:'thunderstorm', temp:27, feels_like:29, location:'GC→Sydney'}, // 修正圖示代碼
+                activities: [
+                    { id: 501, name: '前往庫倫賓', category: '交通', time: '08:20', notes: '攜帶行李前往 (門口可寄存 $3-8)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
+                    { id: 502, name: '庫倫賓野生動物園', category: '景點', time: '09:00', notes: '門票約 $65', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'camera_alt', time:'--'}, image: 'https://images.unsplash.com/photo-1533514114760-4389f572ae26?q=80&w=400&auto=format&fit=crop' },
+                    { id: 503, name: '抱無尾熊拍照 (Koala)', category: '必做', time: '09:15', notes: '入園第一件事先去預約！', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1528028751512-42173f4d5463?q=80&w=400&auto=format&fit=crop' },
+                    { id: 504, name: '餵袋鼠 & 遊園小火車', category: '體驗', time: '10:00', notes: '飼料需另購', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'restaurant', time:'--'}, image: 'https://images.unsplash.com/photo-1596716075908-1f440d9908c6?q=80&w=400&auto=format&fit=crop' },
+                    { id: 505, name: '午餐 (園區內)', category: '美食', time: '11:30', notes: '簡單解決', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'directions_bus', time:'15m'}, image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=400&auto=format&fit=crop' },
+                    { id: 506, name: '前往黃金海岸機場 (OOL)', category: '交通', time: '13:10', notes: '取回行李，務必準時離開', location: 'Gold Coast Airport', transport:{icon:'flight_takeoff', time:'--'}, image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=400&auto=format&fit=crop' },
+                    { id: 507, name: '飛機返程', category: '航班', time: '14:50', notes: '返回悉尼', location: 'Gold Coast Airport', transport:{icon:'home', time:'--'}, image: 'https://images.unsplash.com/photo-1542296332-2e44a99cfef9?q=80&w=400&auto=format&fit=crop' }
+                ]
+            }
+        ];
+
+        // 綁定資料 (v11)
+        const itinerary = reactive(load('itinerary_v11', defaultItinerary));
+        const currentDay = computed(() => itinerary[currentDayIndex.value]);
+        const openGoogleMaps = (loc) => loc ? window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`) : alert('請先設定地點');
+
+        // Modal 與 表單
+        const isActivityModalOpen = ref(false);
+        const editingActivityIndex = ref(null);
+        const activityForm = reactive({ name:'', category:'', time:'', notes:'', location:'', image: '' });
+        const openNewActivityModal = () => { editingActivityIndex.value = null; Object.assign(activityForm, {name:'', category:'景點', time:'', notes:'', location:'', image:''}); isActivityModalOpen.value = true; };
+        const editActivity = (dayIdx, actIdx) => { editingActivityIndex.value = actIdx; Object.assign(activityForm, itinerary[dayIdx].activities[actIdx]); isActivityModalOpen.value = true; };
+        const handleActivityImageUpload = (e) => { const r = new FileReader(); r.onload = x => activityForm.image = x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
+        const saveActivity = () => {
+            if (editingActivityIndex.value === null) itinerary[currentDayIndex.value].activities.push({...activityForm, id: Date.now()});
+            else Object.assign(itinerary[currentDayIndex.value].activities[editingActivityIndex.value], activityForm);
+            save('itinerary_v11', itinerary); isActivityModalOpen.value = false;
+        };
+        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v11', itinerary); isActivityModalOpen.value = false; };
+
+        // 住宿 (v11 更新地址)
+        const isAccommodationModalOpen = ref(false);
+        const accommodationInfo = reactive(load('accom_v11', { 
+            brisbane: {city:'Brisbane', name:'Ivy and Eve Apartments', address:'22/28 Merivale St, South Brisbane'}, 
+            gc: {city:'Gold Coast', name:'The Island Gold Coast', address:'3128 Surfers Paradise Blvd'} 
+        }));
+        const openAccommodationModal = () => isAccommodationModalOpen.value = true;
+        const saveAccommodation = () => { save('accom_v11', accommodationInfo); isAccommodationModalOpen.value = false; };
+
+        // 購物
+        const isShoppingModalOpen = ref(false);
+        const shoppingList = reactive(load('shop_v11', []));
+        const shoppingForm = reactive({ name:'', image: null });
+        const openNewShoppingModal = () => { shoppingForm.name=''; shoppingForm.image=null; isShoppingModalOpen.value = true; };
+        const handleImageUpload = (e) => { const r = new FileReader(); r.onload=x=>shoppingForm.image=x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
+        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v11', shoppingList); isShoppingModalOpen.value = false; };
+        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v11', shoppingList); };
+
+        // 花費
+        const isExpenseModalOpen = ref(false);
+        const expenseList = reactive(load('exp_v11', []));
+        const expenseForm = reactive({ category:'飲食', name:'', amount:0, date: new Date().toISOString().split('T')[0] });
+        const openNewExpenseModal = () => { expenseForm.name=''; expenseForm.amount=''; isExpenseModalOpen.value = true; };
+        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v11', expenseList); isExpenseModalOpen.value = false; };
+        const totalExpenses = computed(() => expenseList.reduce((sum, i) => sum + Number(i.amount||0), 0));
+        
+        // 航班
+        const flightInfo = { depart: {time:'09:40', flight:'VA528'}, return: {time:'14:50', flight:'VA528'} };
+
+        // --- ☁️ 資料同步功能 (V11: 手機友善版) ---
+        const isSyncModalOpen = ref(false);
+        const importDataString = ref('');
+        const exportDataString = ref('');
+
+        const openSyncModal = () => {
+            isSyncModalOpen.value = true;
+            exportDataString.value = '';
+            importDataString.value = '';
+        };
+
+        const generateExportCode = () => {
+            const allData = { itinerary, accommodation: accommodationInfo, shopping: shoppingList, expenses: expenseList };
+            exportDataString.value = JSON.stringify(allData);
+            
+            // 嘗試自動複製，失敗也不報錯，因為有 Textarea 顯示
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(exportDataString.value).then(() => alert('已複製代碼！')).catch(() => {});
+            }
+        };
+
+        const importData = () => {
+            try {
+                const data = JSON.parse(importDataString.value);
+                if (data.itinerary) {
+                    Object.assign(itinerary, data.itinerary);
+                    Object.assign(accommodationInfo, data.accommodation);
+                    shoppingList.splice(0, shoppingList.length, ...data.shopping);
+                    expenseList.splice(0, expenseList.length, ...data.expenses);
+                    
+                    save('itinerary_v11', itinerary);
+                    save('accom_v11', accommodationInfo);
+                    save('shop_v11', shoppingList);
+                    save('exp_v11', expenseList);
+                    
+                    alert('資料還原成功！');
+                    isSyncModalOpen.value = false;
+                } else {
+                    alert('資料格式錯誤');
+                }
+            } catch (e) {
+                alert('無效的資料代碼');
+            }
+        };
+
+        return {
+            tabs, currentTab, currentDayIndex, itinerary, currentDay,
+            flightInfo, accommodationInfo, shoppingList, expenseList, totalExpenses,
+            isActivityModalOpen, activityForm, editingActivityIndex, openNewActivityModal, editActivity, saveActivity, confirmDeleteActivity, handleActivityImageUpload,
+            isAccommodationModalOpen, openAccommodationModal, saveAccommodation,
+            isShoppingModalOpen, shoppingForm, openNewShoppingModal, handleImageUpload, addShoppingItem, removeShoppingItem,
+            isExpenseModalOpen, expenseForm, openNewExpenseModal, addExpense,
+            openGoogleMaps,
+            isSyncModalOpen, openSyncModal, generateExportCode, importData, importDataString, exportDataString
+        };
+    }
+}).mount('#app');
+</script>
+</body>
+</html>
