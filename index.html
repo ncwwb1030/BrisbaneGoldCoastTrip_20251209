@@ -125,7 +125,7 @@
                                                 'bg-rose-500': activity.category === '美食',
                                                 'bg-purple-500': activity.category === '購物',
                                                 'bg-slate-500': activity.category === '交通',
-                                                'bg-indigo-400': activity.category === '必做' || activity.category === '必看',
+                                                'bg-indigo-400': activity.category === '必做' || activity.category === '必看' || activity.category === '體驗',
                                                 'bg-gray-400': activity.category === '其他'
                                               }">
                                             {{ activity.category }}
@@ -260,7 +260,7 @@
             <div class="space-y-3">
                 <div v-for="(exp, index) in expenseList" :key="index" class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center active-scale">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mr-4 text-2xl shadow-inner">
+                        <div class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mr-4 text-2xl shadow-inner">
                             <span v-if="exp.category==='飲食'">🍔</span>
                             <span v-else-if="exp.category==='交通'">🚌</span>
                             <span v-else-if="exp.category==='購物'">🛍️</span>
@@ -287,7 +287,7 @@
                 <h3 class="text-xl font-bold flex items-center text-gray-800"><span class="material-icons mr-2 text-blue-600">cloud_sync</span> 備份與還原</h3>
                 <button @click="isSyncModalOpen = false" class="text-gray-400 hover:text-gray-600"><span class="material-icons">close</span></button>
             </div>
-            <p class="text-xs text-gray-500 mb-6 bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <p class="text-xs text-gray-500 mb-6 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-100">
                 本網頁為單機版，請使用下方代碼在手機與電腦間傳輸資料。
             </p>
             
@@ -331,7 +331,7 @@
             </div>
             <div class="flex gap-3 mt-6">
                 <button @click="isActivityModalOpen = false" class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200">取消</button>
-                <button @click="saveActivity" class="flex-1 py-3 color-primary text-white rounded-xl font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-800">儲存</button>
+                <button @click="saveActivity" class="flex-1 py-3 bg-[#004c8f] text-white rounded-xl font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-800">儲存</button>
             </div>
             <button v-if="editingActivityIndex !== null" @click="confirmDeleteActivity" class="w-full py-3 text-red-400 text-sm font-bold mt-2 hover:bg-red-50 rounded-xl transition">刪除此行程</button>
         </div>
@@ -345,7 +345,7 @@
                 <input v-model="info.name" placeholder="飯店名稱" class="w-full p-3 bg-gray-50 rounded-xl border-none mb-2 focus:ring-2 focus:ring-blue-200">
                 <input v-model="info.address" placeholder="地址" class="w-full p-3 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-200">
             </div>
-            <div class="flex gap-3 mt-6"><button @click="isAccommodationModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="saveAccommodation" class="flex-1 py-3 color-primary text-white rounded-xl font-bold shadow-lg">儲存</button></div>
+            <div class="flex gap-3 mt-6"><button @click="isAccommodationModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="saveAccommodation" class="flex-1 py-3 bg-[#004c8f] text-white rounded-xl font-bold shadow-lg">儲存</button></div>
         </div>
     </div>
 
@@ -355,7 +355,7 @@
             <input v-model="shoppingForm.name" placeholder="商品名稱" class="w-full p-4 bg-gray-50 rounded-xl border-none mb-4 focus:ring-2 focus:ring-blue-200">
             <label class="block text-sm font-bold text-gray-500 mb-2">上傳圖片</label>
             <input type="file" @change="handleImageUpload" class="w-full p-2 bg-gray-50 rounded-xl mb-4 text-sm text-gray-500">
-            <div class="flex gap-3"><button @click="isShoppingModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="addShoppingItem" class="flex-1 py-3 color-primary text-white rounded-xl font-bold shadow-lg">新增</button></div>
+            <div class="flex gap-3"><button @click="isShoppingModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="addShoppingItem" class="flex-1 py-3 bg-[#004c8f] text-white rounded-xl font-bold shadow-lg">新增</button></div>
         </div>
     </div>
 
@@ -368,7 +368,7 @@
                 <input v-model="expenseForm.amount" type="number" placeholder="金額 (AUD)" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-200">
                 <input v-model="expenseForm.date" type="date" class="w-full p-4 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-200">
             </div>
-            <div class="flex gap-3 mt-6"><button @click="isExpenseModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="addExpense" class="flex-1 py-3 color-primary text-white rounded-xl font-bold shadow-lg">新增</button></div>
+            <div class="flex gap-3 mt-6"><button @click="isExpenseModalOpen = false" class="flex-1 py-3 bg-gray-100 rounded-xl font-bold">取消</button><button @click="addExpense" class="flex-1 py-3 bg-[#004c8f] text-white rounded-xl font-bold shadow-lg">新增</button></div>
         </div>
     </div>
 
@@ -386,7 +386,7 @@ createApp({
         const currentTab = ref('schedule');
         const currentDayIndex = ref(0);
 
-        // --- ✈️ 行程資料 (V11: 100% 同步 Word 檔 + 修復圖示) ---
+        // --- ✈️ 行程資料 (V13: 修正按鈕顏色、圖示問題) ---
         const defaultItinerary = [
             // Day 1: 12/09 (Tue)
             { 
@@ -419,7 +419,7 @@ createApp({
             // Day 3: 12/11 (Thu)
             { 
                 date: 'Thu 11', 
-                weather: {icon:'wb_sunny', temp:26, feels_like:28, location:'Brisbane→Gold Coast'}, 
+                weather: {icon:'wb_sunny', temp:26, feels_like:28, location:'Brisbane→GC'}, 
                 activities: [
                     { id: 301, name: 'Coffee Anthology', category: '美食', time: '08:30', notes: '必去咖啡店 (Margaret St)', location: 'Coffee Anthology', transport:{icon:'directions_walk', time:'10m'}, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop' },
                     { id: 302, name: '羅馬街公園 (Roma St)', category: '景點', time: '09:30', notes: '亞熱帶花園 Spectacle Garden', location: 'Roma Street Parkland', transport:{icon:'directions_walk', time:'20m'}, image: 'https://images.unsplash.com/photo-1585863920703-e83df0239247?q=80&w=400&auto=format&fit=crop' },
@@ -434,7 +434,7 @@ createApp({
             // Day 4: 12/12 (Fri)
             { 
                 date: 'Fri 12', 
-                weather: {icon:'thunderstorm', temp:28, feels_like:30, location:'Gold Coast'}, // 修正圖示代碼
+                weather: {icon:'thunderstorm', temp:28, feels_like:30, location:'Gold Coast'}, // 修正為 thunderstorm
                 activities: [
                     { id: 401, name: '衝浪者天堂 (Surfers Paradise)', category: '景點', time: '10:00', notes: '沙灘漫步、地標拱門拍照', location: 'Surfers Paradise Sign', transport:{icon:'directions_bus', time:'20m'}, image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=400&auto=format&fit=crop' },
                     { id: 402, name: 'Charis Seafood', category: '美食', time: '12:45', notes: '前往 Labrador。必吃：炸魚薯條', location: 'Charis Seafoods', transport:{icon:'visibility', time:'--'}, image: 'https://images.unsplash.com/photo-1534940562479-7977eb772a0d?q=80&w=400&auto=format&fit=crop' },
@@ -446,7 +446,7 @@ createApp({
             // Day 5: 12/13 (Sat)
             { 
                 date: 'Sat 13', 
-                weather: {icon:'thunderstorm', temp:27, feels_like:29, location:'Gold Coast→Sydney'}, // 修正圖示代碼
+                weather: {icon:'thunderstorm', temp:27, feels_like:29, location:'GC→Sydney'}, // 修正為 thunderstorm
                 activities: [
                     { id: 501, name: '前往庫倫賓', category: '交通', time: '08:20', notes: '攜帶行李前往 (門口可寄存 $3-8)', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'pets', time:'--'}, image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop' },
                     { id: 502, name: '庫倫賓野生動物園', category: '景點', time: '09:00', notes: '門票約 $65', location: 'Currumbin Wildlife Sanctuary', transport:{icon:'camera_alt', time:'--'}, image: 'https://images.unsplash.com/photo-1533514114760-4389f572ae26?q=80&w=400&auto=format&fit=crop' },
@@ -459,8 +459,8 @@ createApp({
             }
         ];
 
-        // 綁定資料 (v11)
-        const itinerary = reactive(load('itinerary_v11', defaultItinerary));
+        // 綁定資料 (v13 - 強制更新)
+        const itinerary = reactive(load('itinerary_v13', defaultItinerary));
         const currentDay = computed(() => itinerary[currentDayIndex.value]);
         const openGoogleMaps = (loc) => loc ? window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`) : alert('請先設定地點');
 
@@ -474,40 +474,40 @@ createApp({
         const saveActivity = () => {
             if (editingActivityIndex.value === null) itinerary[currentDayIndex.value].activities.push({...activityForm, id: Date.now()});
             else Object.assign(itinerary[currentDayIndex.value].activities[editingActivityIndex.value], activityForm);
-            save('itinerary_v11', itinerary); isActivityModalOpen.value = false;
+            save('itinerary_v13', itinerary); isActivityModalOpen.value = false;
         };
-        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v11', itinerary); isActivityModalOpen.value = false; };
+        const confirmDeleteActivity = () => { itinerary[currentDayIndex.value].activities.splice(editingActivityIndex.value, 1); save('itinerary_v13', itinerary); isActivityModalOpen.value = false; };
 
-        // 住宿 (v11 更新地址)
+        // 住宿 (v13)
         const isAccommodationModalOpen = ref(false);
-        const accommodationInfo = reactive(load('accom_v11', { 
+        const accommodationInfo = reactive(load('accom_v13', { 
             brisbane: {city:'Brisbane', name:'Ivy and Eve Apartments', address:'22/28 Merivale St, South Brisbane'}, 
             gc: {city:'Gold Coast', name:'The Island Gold Coast', address:'3128 Surfers Paradise Blvd'} 
         }));
         const openAccommodationModal = () => isAccommodationModalOpen.value = true;
-        const saveAccommodation = () => { save('accom_v11', accommodationInfo); isAccommodationModalOpen.value = false; };
+        const saveAccommodation = () => { save('accom_v13', accommodationInfo); isAccommodationModalOpen.value = false; };
 
         // 購物
         const isShoppingModalOpen = ref(false);
-        const shoppingList = reactive(load('shop_v11', []));
+        const shoppingList = reactive(load('shop_v13', []));
         const shoppingForm = reactive({ name:'', image: null });
         const openNewShoppingModal = () => { shoppingForm.name=''; shoppingForm.image=null; isShoppingModalOpen.value = true; };
         const handleImageUpload = (e) => { const r = new FileReader(); r.onload=x=>shoppingForm.image=x.target.result; if(e.target.files[0]) r.readAsDataURL(e.target.files[0]); };
-        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v11', shoppingList); isShoppingModalOpen.value = false; };
-        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v11', shoppingList); };
+        const addShoppingItem = () => { shoppingList.push({...shoppingForm}); save('shop_v13', shoppingList); isShoppingModalOpen.value = false; };
+        const removeShoppingItem = (i) => { shoppingList.splice(i, 1); save('shop_v13', shoppingList); };
 
         // 花費
         const isExpenseModalOpen = ref(false);
-        const expenseList = reactive(load('exp_v11', []));
+        const expenseList = reactive(load('exp_v13', []));
         const expenseForm = reactive({ category:'飲食', name:'', amount:0, date: new Date().toISOString().split('T')[0] });
         const openNewExpenseModal = () => { expenseForm.name=''; expenseForm.amount=''; isExpenseModalOpen.value = true; };
-        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v11', expenseList); isExpenseModalOpen.value = false; };
+        const addExpense = () => { expenseList.push({...expenseForm}); save('exp_v13', expenseList); isExpenseModalOpen.value = false; };
         const totalExpenses = computed(() => expenseList.reduce((sum, i) => sum + Number(i.amount||0), 0));
         
         // 航班
         const flightInfo = { depart: {time:'09:40', flight:'VA528'}, return: {time:'14:50', flight:'VA528'} };
 
-        // --- ☁️ 資料同步功能 (V11: 手機友善版) ---
+        // --- ☁️ 資料同步功能 (V13) ---
         const isSyncModalOpen = ref(false);
         const importDataString = ref('');
         const exportDataString = ref('');
@@ -522,7 +522,7 @@ createApp({
             const allData = { itinerary, accommodation: accommodationInfo, shopping: shoppingList, expenses: expenseList };
             exportDataString.value = JSON.stringify(allData);
             
-            // 嘗試自動複製，失敗也不報錯，因為有 Textarea 顯示
+            // 嘗試自動複製
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(exportDataString.value).then(() => alert('已複製代碼！')).catch(() => {});
             }
@@ -537,10 +537,10 @@ createApp({
                     shoppingList.splice(0, shoppingList.length, ...data.shopping);
                     expenseList.splice(0, expenseList.length, ...data.expenses);
                     
-                    save('itinerary_v11', itinerary);
-                    save('accom_v11', accommodationInfo);
-                    save('shop_v11', shoppingList);
-                    save('exp_v11', expenseList);
+                    save('itinerary_v13', itinerary);
+                    save('accom_v13', accommodationInfo);
+                    save('shop_v13', shoppingList);
+                    save('exp_v13', expenseList);
                     
                     alert('資料還原成功！');
                     isSyncModalOpen.value = false;
